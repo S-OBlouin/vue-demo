@@ -1,9 +1,9 @@
 <template>
   <div class=" bg-gray-400 ">
     <div class=" flex w-screen h-screen justify-center">
-      <form class="mt-40 h-52 w-56 flex-col flex bg-white shadow-xl items-center justify-center">
-        <div>KROTON AML Log In</div>
-        <select v-model="selected" class="mb-3 mt-3 px-1 ">
+      <form class="mt-40 h-52 w-56 flex-col flex bg-white shadow-xl items-center justify-center rounded">
+        <div>H3M Log In</div>
+        <select v-model="selected" class="mb-3 mt-3 px-1 w-52">
           <option disabled selected>Choose a bank</option>
           <option v-for="company in companies">{{ company }}</option>
         </select>
