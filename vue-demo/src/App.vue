@@ -1,5 +1,5 @@
 <template>
-  <div class=" bg-gray-400 ">
+  <div class=" bg-[url('../assets/img/bg.jpg')] ">
     <div class=" flex w-screen h-screen justify-center">
       <form class="mt-40 h-72 w-80 flex-col flex bg-white shadow-xl items-center justify-center rounded">
         <div class=" text-3xl">H3M Log In</div>
@@ -31,6 +31,7 @@ export default {
       companies: [],
       username: ref(''),
       password: ref(''),
+      companyId: ref(''),
     }
   },
   async mounted () {
@@ -43,11 +44,33 @@ export default {
   },
   methods: {
     logIn () {
-      console.log(this.username)
+      const company = this.companies.filter(company => company.companyName == this.selected)
+      this.companyId = company.companyId
+      console.log(company)
+      // try {
+      //   await axios.post('http://213.159.5.243:8081/api/account/login', {
+      //     username: this.username,
+      //     password: this.password,
+      //     companyid: '',
+      //     companyname: this.selected,
+      //     allsessionclose: '',
+      //   })
+      // } catch (error) {
+        
+      // }
     }
   }
 }
 
+
+// {
+//   //put everything lowercase
+//   username:
+//   password:
+//   companyid:
+//   companyname:
+//   allsessionclose:
+// }
 </script>
 
 
