@@ -1,5 +1,5 @@
 <template>
-  <div class=" bg-[url('../assets/img/bg.jpg')] ">
+    <div class=" bg-[url('../assets/img/bg.jpg')] ">
     <div class=" flex w-screen h-screen justify-center">
       <form class="mt-40 h-72 w-80 flex-col flex bg-white shadow-xl items-center justify-center rounded">
         <div class=" text-3xl">H3M Log In</div>
@@ -69,10 +69,4 @@ export default {
     }
   }
 } 
-
-
-// localstorage for companyid, username, token
 </script>
-
-
-
