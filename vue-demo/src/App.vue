@@ -1,7 +1,5 @@
 <template>
-  <div class=" bg-[url('@/assets/img/bg.jpg')] bg-cover">
-    <RouterView />
-  </div>
+  <RouterView />
 </template>
 
 <script>

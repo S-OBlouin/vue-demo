@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen h-screen">
+    <div class="flex flex-col w-screen h-screen">
         <div class=" flex flex-row-reverse ">
             <div class=" rounded bg-white py-1 px-2 my-4 mx-4 hover:bg-slate-800 hover:text-white transition hover:delay-75"
                 @click="logOut">Log

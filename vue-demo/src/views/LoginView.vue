@@ -1,4 +1,5 @@
 <template>
+  <div class=" bg-[url('@/assets/img/bg.jpg')] bg-cover">
     <div class=" flex w-screen h-screen justify-center">
       <form class="mt-40 h-72 w-80 flex-col flex bg-white shadow-xl items-center justify-center rounded">
         <div class=" text-3xl">H3M Log In</div>
@@ -18,31 +19,32 @@
         <button @click.prevent="logIn" class=" bg-green-300 rounded w-20 text-center text-lg">Log In</button>
       </form>
     </div>
+  </div>
 </template>
 
 <script>
 import { ref } from 'vue';
 import APIDataServices from '@/services/APIDataServices.js'
 export default {
-    name: "LoginView",
-    data () {
-        return {
-            selected: ref(''),
-            companies: [],
-            username: ref(''),
-            password: ref(''),
-            companyId: ref(''),
-            error: ref(''),
-        }
-    },
-    async mounted () {
-        try {
-            const response = await APIDataServices.getCompanies();
-            this.companies = response.data
-        } catch (error) {
-            console.error(error);
-        }
-    },
+  name: "LoginView",
+  data () {
+    return {
+      selected: ref(''),
+      companies: [],
+      username: ref(''),
+      password: ref(''),
+      companyId: ref(''),
+      error: ref(''),
+    }
+  },
+  async mounted () {
+    try {
+      const response = await APIDataServices.getCompanies();
+      this.companies = response.data
+    } catch (error) {
+      console.error(error);
+    }
+  },
   methods: {
     async logIn () {
       const comapnyFind = this.companies.find(company => company.companyName == this.selected)
@@ -56,12 +58,12 @@ export default {
           companyname: this.selected,
           allsessionclose: true,
         })
-        if (response.data.accessToken){
+        if (response.data.accessToken) {
           localStorage.setItem('Username', this.username)
           localStorage.setItem('Company ID', this.companyId)
           localStorage.setItem('Token', response.data.accessToken)
-          this.$router.push({name: "home"})
-        console.log('Success!')
+          this.$router.push({ name: "home" })
+          console.log('Success!')
         }
       } catch (error) {
         this.error = 'Your username or password is incorrect'
