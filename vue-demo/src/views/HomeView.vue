@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-screen h-screen">
+    <div class="flex flex-col h-screen">
 
         <div class=" flex flex-col items-center justify-center h-[850px]">
             <h1 class="text-5xl text-decoration-line: underline bg-white rounded px-1 pb-1">
@@ -14,10 +14,16 @@
 
 <script>
 import APIDataServices from '@/services/APIDataServices.js'
+import { useUserStore } from '../stores/UserStore';
 import { ref } from 'vue';
 
 export default {
     name: "HomeView",
+    setup () {
+        const userStore = useUserStore()
+
+        return { userStore }
+    },
     data () {
         return {
             roleName: ref(''),
@@ -25,7 +31,7 @@ export default {
     },
     methods: {
         async press () {
-            let response = await APIDataServices.getRoles(localStorage.getItem('Token'))
+            let response = await APIDataServices.getRoles(this.userStore.token)
             const role = JSON.parse(JSON.stringify(response))
             this.roleName = role.data
         },

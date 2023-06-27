@@ -25,8 +25,15 @@
 <script>
 import { ref } from 'vue';
 import APIDataServices from '@/services/APIDataServices.js'
+import { useUserStore } from '../stores/UserStore';
 export default {
   name: "LoginView",
+
+  setup () {
+    const userStore = useUserStore()
+
+    return { userStore }
+  },
   data () {
     return {
       selected: ref(''),
@@ -59,11 +66,10 @@ export default {
           allsessionclose: true,
         })
         if (response.data.accessToken) {
-          localStorage.setItem('Username', this.username)
-          localStorage.setItem('Company ID', this.companyId)
-          localStorage.setItem('Token', response.data.accessToken)
+          this.userStore.username = this.username
+          this.userStore.companyId = this.companyId
+          this.userStore.token = response.data.accessToken
           this.$router.push({ name: "home" })
-          console.log('Success!')
         }
       } catch (error) {
         this.error = 'Your username or password is incorrect'
