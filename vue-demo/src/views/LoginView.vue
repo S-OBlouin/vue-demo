@@ -25,7 +25,7 @@
 <script>
 import { ref } from 'vue';
 import APIDataServices from '@/services/APIDataServices.js'
-import { useUserStore } from '../stores/UserStore';
+import { useUserStore } from '@/stores/UserStore';
 export default {
   name: "LoginView",
 
