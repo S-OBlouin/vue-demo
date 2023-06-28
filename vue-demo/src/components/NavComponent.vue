@@ -7,8 +7,8 @@
             <p class="px-4 py-3 mt-3 font-semibold">Menu</p>
             <p class="material-symbols-outlined pr-2 py-3 mt-3 cursor-pointer" @click="closeMenu">menu</p>
         </div>
-        <div v-for="button in buttons" class=" px-4 py-3 mt-4" :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-75' : 'flex justify-center items-center'">
-            <router-link to="#" :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-75 truncate'">Scan</router-link>
+        <div v-for="button in buttons" class=" px-4 py-3 mt-4" :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center'">
+            <router-link to="#" :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">Scan</router-link>
         </div>
     </nav>
 </template>
