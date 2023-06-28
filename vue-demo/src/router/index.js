@@ -25,6 +25,7 @@ router.beforeEach((to, from, next) =>{
   const userStore = useUserStore()
 
   if(!userStore.token && to.name !== 'login'){
+    userStore.$reset()
     next({name: 'login'})
   }else{
     next()
