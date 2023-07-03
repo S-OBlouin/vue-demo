@@ -7,18 +7,224 @@
             <p class="px-4 py-3 mt-3 font-semibold">Menu</p>
             <p class="material-symbols-outlined pr-2 py-3 mt-3 cursor-pointer" @click="closeMenu">menu</p>
         </div>
-        <div v-for="button in buttons">
-            <div v-if="button == 19" class=" px-4 py-3 mt-4"
+        <div v-for="button in buttonVisibility">
+            <div v-if="button.number == 1" class=" px-4 py-3 mt-4"
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
                 <router-link to="#"
-                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">Know
-                    Your Customer</router-link>
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</router-link>
             </div>
-            <div v-if="button == 1 || button == 16" class=" px-4 py-3 mt-4"
+            <div v-if="button.number == 2" @click="openSubMenu(button)" :key="button.number"
+                class="px-4 py-3 mt-4 flex flex-row justify-between"
+                :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                <span
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</span>
+                <span class="material-symbols-outlined"
+                    :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
+            </div>
+            <div v-if="subMenuOpen && activeButton.number == 2">
+                <div v-if="button.number === 3" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 4" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 5" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+            </div>
+            <div v-if="button.number == 6" @click="openSubMenu(button)" :key="button.number"
+                class="px-4 py-3 mt-4 flex flex-row justify-between"
+                :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                <span
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</span>
+                <span class="material-symbols-outlined"
+                    :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
+            </div>
+            <div v-if="subMenuOpen && activeButton.number == 6">
+                <div v-if="button.number === 7" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 8" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 9" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 10" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+            </div>
+            <div v-if="button.number == 11" @click="openSubMenu(button)" :key="button.number"
+                class="px-4 py-3 mt-4 flex flex-row justify-between"
+                :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                <span
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</span>
+                <span class="material-symbols-outlined"
+                    :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
+            </div>
+            <div v-if="subMenuOpen && activeButton.number == 11">
+                <div v-if="button.number === 12" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+            </div>
+            <div v-if="button.number == 13" class=" px-4 py-3 mt-4"
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
                 <router-link to="#"
-                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">Active
-                    Learner</router-link>
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</router-link>
+            </div>
+            <div v-if="button.number == 14" class=" px-4 py-3 mt-4"
+                :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                <router-link to="#"
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</router-link>
+            </div>
+            <div v-if="button.number == 15" @click="openSubMenu(button)" :key="button.number"
+                class="px-4 py-3 mt-4 flex flex-row justify-between"
+                :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                <span
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</span>
+                <span class="material-symbols-outlined"
+                    :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
+            </div>
+            <div v-if="subMenuOpen && activeButton.number == 15">
+                <div v-if="button.number === 16" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 17" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 18" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 19" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 20" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+            </div>
+            <div v-if="button.number == 21" @click="openSubMenu(button)" :key="button.number"
+                class="px-4 py-3 mt-4 flex flex-row justify-between"
+                :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                <span
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</span>
+                <span class="material-symbols-outlined"
+                    :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
+            </div>
+            <div v-if="button.number == 22" @click="openSubMenu(button)" :key="button.number"
+                class="px-4 py-3 mt-4 flex flex-row justify-between"
+                :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                <span
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</span>
+                <span class="material-symbols-outlined"
+                    :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
+            </div>
+            <div v-if="subMenuOpen && activeButton.number == 22">
+                <div v-if="button.number === 23" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+            </div>
+            <div v-if="button.number == 24" class=" px-4 py-3 mt-4"
+                :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                <router-link to="#"
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</router-link>
+            </div>
+            <div v-if="button.number == 25" @click="openSubMenu(button)" :key="button.number"
+                class="px-4 py-3 mt-4 flex flex-row justify-between"
+                :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                <span
+                    :class="isOpen ? '' : ' rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
+                        button.name }}</span>
+                <span class="material-symbols-outlined"
+                    :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
+            </div>
+            <div v-if="subMenuOpen && activeButton.number == 25">
+                <div v-if="button.number === 26" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 27" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
+                <div v-if="button.number === 28" class="px-4 py-3 mt-4"
+                    :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
+                    <router-link to="#"
+                        :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
+                        {{ button.name }}
+                    </router-link>
+                </div>
             </div>
         </div>
     </nav>
@@ -37,7 +243,9 @@ export default {
         return {
             buttons: [],
             buttonVisibility: [],
-            isOpen: ref(true)
+            isOpen: ref(true),
+            subMenuOpen: ref(false),
+            activeButton: null,
         }
     },
     async mounted () {
@@ -45,19 +253,74 @@ export default {
             if (this.userStore.token) {
                 const response = await APIDataServices.getButtonVisibility(this.userStore.token)
                 this.buttons = JSON.parse(JSON.stringify(response.data))
-                console.log(this.buttons)
+                this.buttons.forEach(button => {
+                    if (button == 19) {
+                        this.buttonVisibility.push({ number: 1, name: 'Know Your Customer', link: 'knowCustomer' })
+                    } else if (button == 1) {
+                        this.buttonVisibility.push({ number: 2, name: 'Active Learner', link: '' })
+                        this.buttonVisibility.push({ number: 3, name: 'Test', link: 'test' })
+                        this.buttonVisibility.push({ number: 4, name: 'Test Builder', link: 'testBuilder' })
+                    } else if (button == 16) {
+                        this.buttonVisibility.push({ number: 5, name: 'Incorporation', link: 'incorporation' })
+                    } else if (button == 10) {
+                        this.buttonVisibility.push({ number: 6, name: 'Suspect Miner', link: '' })
+                        this.buttonVisibility.push({ number: 7, name: 'Miner Training', link: 'suspectMinerTraining' })
+                    } else if (button == 6) {
+                        this.buttonVisibility.push({ number: 8, name: 'Miner Scheduling', link: 'minerScheduling' })
+                    } else if (button == 8) {
+                        this.buttonVisibility.push({ number: 9, name: 'Suspect Listing', link: 'suspectListing' })
+                    } else if (button == 5) {
+                        this.buttonVisibility.push({ number: 10, name: 'Backlog Miner', link: 'backlogMiner' })
+                    } else if (button == 12) {
+                        this.buttonVisibility.push({ number: 11, name: 'Link Miner', link: '' })
+                        this.buttonVisibility.push({ number: 12, name: 'Miner Training', link: 'linkMinerTraining' })
+                    } else if (button == 4) {
+                        this.buttonVisibility.push({ number: 13, name: 'Task Manager', link: 'taskManager' })
+                    } else if (button == 3) {
+                        this.buttonVisibility.push({ number: 14, name: 'Activity Log', link: 'activityLog' })
+                    } else if (button == 15) {
+                        this.buttonVisibility.push({ number: 15, name: 'Sanction Miner', link: '' })
+                        this.buttonVisibility.push({ number: 16, name: 'Run Sanction Miner', link: 'sanctionMiner' })
+                        this.buttonVisibility.push({ number: 17, name: 'Run Sanction Giden Swift', link: 'gidenSwift' })
+                    } else if (button == 17) {
+                        this.buttonVisibility.push({ number: 18, name: 'Run Sanction Matcher', link: 'sanctionMatcher' })
+                    } else if (button == 18) {
+                        this.buttonVisibility.push({ number: 19, name: 'Run Sanction Matcher Inc', link: 'sanctionMatcherInc' })
+                    } else if (button == 2) {
+                        this.buttonVisibility.push({ number: 20, name: 'Run Sanction Matcher with Params', link: 'sanctionMatcherParams' })
+                    } else if (button == 9) {
+                        this.buttonVisibility.push({ number: 21, name: 'Case Management', link: '' })
+                    } else if (button == 11) {
+                        this.buttonVisibility.push({ number: 22, name: 'Settings', link: '' })
+                        this.buttonVisibility.push({ number: 23, name: 'Risk Settings', link: 'riskSettings' })
+                    } else if (button == 7) {
+                        this.buttonVisibility.push({ number: 24, name: 'System Management', link: 'systemManagement' })
+                    } else if (button == 14) {
+                        this.buttonVisibility.push({ number: 25, name: 'Reports', link: '' })
+                        this.buttonVisibility.push({ number: 26, name: 'Sanction Scan Reports', link: 'sanctionScanReports' })
+                    } else if (button == 13) {
+                        this.buttonVisibility.push({ number: 27, name: 'NRT Reports', link: 'nrtReports' })
+                    } else if (button == 20) {
+                        this.buttonVisibility.push({ number: 28, name: 'Backlog Result Report', link: 'backlogResultReport' })
+                    }
+                });
+                this.buttonVisibility = this.buttonVisibility.sort((b1, b2) => (b1.number > b2.number) ? 1 : (b1.number < b2.number) ? -1 : 0)
             }
         } catch (error) {
             console.error(error)
         }
     },
-    computed () {
-
-    },
     methods: {
         closeMenu () {
             this.isOpen = !this.isOpen
-            console.log(this.isOpen)
+        },
+        openSubMenu (button) {
+            if (this.activeButton === button) {
+                this.subMenuOpen = !this.subMenuOpen;
+            } else {
+                this.subMenuOpen = true;
+                this.activeButton = button;
+            }
         }
     }
 }
