@@ -7,6 +7,7 @@ export const useUserStore = defineStore("userStore", {
             username: '',
             companyId: '',
             token: '',
+            pageName: 'Home',
         }
     },
 })

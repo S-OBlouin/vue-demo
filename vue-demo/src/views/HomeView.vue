@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col h-screen flex-grow">
-        <HeaderComponent />
+        <!-- <HeaderComponent /> -->
 
         <div class=" flex flex-col items-center justify-center flex-grow">
             <h1 class="text-5xl text-decoration-line: underline bg-white rounded px-1 pb-1">

@@ -1,7 +1,7 @@
 <template>
     <nav class="flex flex-col bg-yellow-500 px-2 pt-2 transition-all delay-100" :class="isOpen ? 'w-56 ' : 'w-32'">
         <div class="flex justify-center items-center">
-            <router-link to="/"><img src="@/assets/img/icon.png" alt="Home Icon" class=" h-14 ml-2" /></router-link>
+            <router-link to="/" @click="this.userStore.pageName = 'Home'"><img src="@/assets/img/icon.png" alt="Home Icon" class=" h-14 ml-2" /></router-link>
         </div>
         <div class="flex flex-row justify-between">
             <p class="px-4 py-3 mt-3 font-semibold">Menu</p>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div v-if="button.number == 6" @click="openSubMenu(button)" :key="button.number"
-                class="px-4 py-3 mt-4 flex"
+                class="px-4 py-3 mt-4 flex relative group"
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100 flex-row justify-between' : 'flex justify-center items-center transition-all delay-100'">
                 <div class="flex justify-center items-center">
                     <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">domino_mask</span>
@@ -65,7 +65,7 @@
             <div v-if="subMenuOpen && activeButton.number == 6">
                 <div v-if="button.number === 7" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="/suspect-miner/training" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
@@ -348,7 +348,7 @@ export default {
                 this.subMenuOpen = true;
                 this.activeButton = button;
             }
-        }
+        },
     }
 }
 </script>

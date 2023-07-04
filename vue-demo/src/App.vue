@@ -1,19 +1,23 @@
 <template>
   <div class="flex">
-    <NavComponent v-if="isLogin"/>
-    <RouterView />
+    <NavComponent v-if="isLogin" class=" z-10"/>
+    <div class="flex flex-grow flex-col">
+      <HeaderComponent v-if="isLogin"/>
+      <RouterView />
+    </div>
   </div>
 </template>
 
 <script>
 import { RouterView } from 'vue-router';
+import HeaderComponent from '@/components/HeaderComponent.vue'
 import NavComponent from '@/components/NavComponent.vue';
 
 export default {
-  components: { RouterView, NavComponent },
+  components: { RouterView, NavComponent, HeaderComponent },
   data () {
     return {
-      routeName: ''
+      routeName: null
     }
   },
 

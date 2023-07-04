@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
+import SuspectMinerTraining from '@/views/SuspectMinerTrainingView.vue'
 import { useUserStore } from '@/stores/UserStore';
 
 
@@ -17,6 +18,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/suspect-miner/training',
+      name: 'suspectMinerTraining',
+      component: SuspectMinerTraining
     }
   ]
 })
