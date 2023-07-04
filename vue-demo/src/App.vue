@@ -7,11 +7,10 @@
 
 <script>
 import { RouterView } from 'vue-router';
-import HeaderComponent from '@/components/HeaderComponent.vue';
 import NavComponent from '@/components/NavComponent.vue';
 
 export default {
-  components: { RouterView, HeaderComponent, NavComponent },
+  components: { RouterView, NavComponent },
   data () {
     return {
       routeName: ''
