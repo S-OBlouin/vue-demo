@@ -1,28 +1,41 @@
 <template>
-    <nav class="flex flex-col bg-yellow-500 px-2 pt-2 transition-all delay-100" :class="isOpen ? 'w-56 ' : 'w-32'">
+    <nav class="flex flex-col bg-yellow-500 px-2 pt-2 transition-all delay-100 " :class="isOpen ? 'w-56 ' : 'w-32'">
         <div class="flex justify-center items-center">
-            <router-link to="/" @click="this.userStore.pageName = 'Home'"><img src="@/assets/img/icon.png" alt="Home Icon" class=" h-14 ml-2" /></router-link>
+            <router-link to="/" @click="this.userStore.pageName = 'Home'"><img src="@/assets/img/icon.png" alt="Home Icon"
+                    class=" h-14 ml-2" /></router-link>
         </div>
         <div class="flex flex-row justify-between">
             <p class="px-4 py-3 mt-3 font-semibold">Menu</p>
             <p class="material-symbols-outlined pr-2 py-3 mt-3 cursor-pointer" @click="closeMenu">menu</p>
         </div>
         <div v-for="button in buttonVisibility">
-            <div v-if="button.number == 1" class=" px-4 py-3 mt-4 flex"
+            <div v-if="button.number == 1" class=" px-4 py-3 mt-4 flex" @mouseenter="hoverName(button)"
+                @mouseleave="closeHover"
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                <span class="material-symbols-outlined justify-center items-center mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">group</span>
-                <router-link to="#" 
+                <span class="material-symbols-outlined justify-center items-center mr-1"
+                    :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">group</span>
+                <router-link to="#"
                     :class="isOpen ? '' : ' hidden rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
                         button.name }}</router-link>
+                <p
+                    :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                    {{
+                        button.name }}
+                </p>
             </div>
-            <div v-if="button.number == 2" @click="openSubMenu(button)" :key="button.number"
-                class="px-4 py-3 mt-4 flex "
+            <div v-if="button.number == 2" @click="openSubMenu(button)" @mouseenter="hoverName(button)"
+                @mouseleave="closeHover" :key="button.number" class="px-4 py-3 mt-4 flex "
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100 flex-row justify-between' : 'flex justify-center items-center transition-all delay-100'">
                 <div class="flex justify-center items-center">
-                    <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">menu_book</span>
-                    <span
-                        :class="isOpen ? '' : ' hidden truncate'">{{
-                            button.name }}</span>
+                    <span class="material-symbols-outlined mr-1"
+                        :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">menu_book</span>
+                    <span :class="isOpen ? '' : ' hidden truncate'">{{
+                        button.name }}</span>
+                    <p
+                        :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                        {{
+                            button.name }}
+                    </p>
                 </div>
                 <span class="material-symbols-outlined"
                     :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
@@ -50,14 +63,19 @@
                     </router-link>
                 </div>
             </div>
-            <div v-if="button.number == 6" @click="openSubMenu(button)" :key="button.number"
-                class="px-4 py-3 mt-4 flex relative group"
+            <div v-if="button.number == 6" @click="openSubMenu(button)" :key="button.number" @mouseenter="hoverName(button)"
+                @mouseleave="closeHover" class="px-4 py-3 mt-4 flex relative group"
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100 flex-row justify-between' : 'flex justify-center items-center transition-all delay-100'">
                 <div class="flex justify-center items-center">
-                    <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">domino_mask</span>
-                    <span
-                        :class="isOpen ? '' : ' hidden truncate'">{{
-                            button.name }}</span>
+                    <span class="material-symbols-outlined mr-1"
+                        :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">domino_mask</span>
+                    <span :class="isOpen ? '' : ' hidden truncate'">{{
+                        button.name }}</span>
+                    <p
+                        :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                        {{
+                            button.name }}
+                    </p>
                 </div>
                 <span class="material-symbols-outlined"
                     :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
@@ -93,14 +111,19 @@
                 </div>
             </div>
             <div v-if="button.number == 11" @click="openSubMenu(button)" :key="button.number"
-                class="px-4 py-3 mt-4 flex "
+                @mouseenter="hoverName(button)" @mouseleave="closeHover" class="px-4 py-3 mt-4 flex "
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100 flex-row justify-between' : 'flex justify-center items-center transition-all delay-100'">
                 <div class="flex justify-center items-center">
-                    <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">link</span>
-                    <span
-                        :class="isOpen ? '' : ' hidden truncate'">{{
-                            button.name }}</span>
+                    <span class="material-symbols-outlined mr-1"
+                        :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">link</span>
+                    <span :class="isOpen ? '' : ' hidden truncate'">{{
+                        button.name }}</span>
                 </div>
+                <p
+                    :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                    {{
+                        button.name }}
+                </p>
                 <span class="material-symbols-outlined"
                     :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
             </div>
@@ -113,29 +136,46 @@
                     </router-link>
                 </div>
             </div>
-            <div v-if="button.number == 13" class=" px-4 py-3 mt-4 flex"
+            <div v-if="button.number == 13" @mouseenter="hoverName(button)" @mouseleave="closeHover"
+                class=" px-4 py-3 mt-4 flex"
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">task</span>
-                <router-link to="#"
-                    :class="isOpen ? '' : ' hidden truncate'">{{
-                        button.name }}</router-link>
+                <span class="material-symbols-outlined mr-1"
+                    :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">task</span>
+                <router-link to="#" :class="isOpen ? '' : ' hidden truncate'">{{
+                    button.name }}</router-link>
+                <p
+                    :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                    {{
+                        button.name }}
+                </p>
             </div>
-            <div v-if="button.number == 14" class=" px-4 py-3 mt-4 flex"
+            <div v-if="button.number == 14" @mouseenter="hoverName(button)" @mouseleave="closeHover"
+                class=" px-4 py-3 mt-4 flex"
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">book</span>
-                <router-link to="#"
-                    :class="isOpen ? '' : 'hidden truncate'">{{
-                        button.name }}</router-link>
+                <span class="material-symbols-outlined mr-1"
+                    :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">book</span>
+                <router-link to="#" :class="isOpen ? '' : 'hidden truncate'">{{
+                    button.name }}</router-link>
+                <p
+                    :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                    {{
+                        button.name }}
+                </p>
             </div>
-            <div v-if="button.number == 15" @click="openSubMenu(button)" :key="button.number"
-                class="px-4 py-3 mt-4 flex "
+            <div v-if="button.number == 15" @click="openSubMenu(button)" @mouseenter="hoverName(button)"
+                @mouseleave="closeHover" :key="button.number" class="px-4 py-3 mt-4 flex "
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100 flex-row justify-between' : 'flex justify-center items-center transition-all delay-100'">
                 <div class="flex justify-center items-center">
-                    <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">gavel</span>
-                    <span
-                        :class="isOpen ? '' : ' hidden truncate'">{{
-                            button.name }}</span>
+                    <span class="material-symbols-outlined mr-1"
+                        :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">gavel</span>
+                    <span :class="isOpen ? '' : ' hidden truncate'">{{
+                        button.name }}</span>
                 </div>
+                <p
+                    :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                    {{
+                        button.name }}
+                </p>
                 <span class="material-symbols-outlined"
                     :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
             </div>
@@ -176,26 +216,36 @@
                     </router-link>
                 </div>
             </div>
-            <div v-if="button.number == 21" @click="openSubMenu(button)" :key="button.number"
-                class="px-4 py-3 mt-4 flex items-center"
+            <div v-if="button.number == 21" @click="openSubMenu(button)" @mouseenter="hoverName(button)"
+                @mouseleave="closeHover" :key="button.number" class="px-4 py-3 mt-4 flex items-center"
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100 flex-row justify-between' : 'flex justify-center items-center transition-all delay-100'">
                 <div class="flex justify-center items-center">
-                    <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">build</span>
-                    <span
-                        :class="isOpen ? '' : ' hidden truncate'">{{
-                            button.name }}</span>
+                    <span class="material-symbols-outlined mr-1"
+                        :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">build</span>
+                    <span :class="isOpen ? '' : ' hidden truncate'">{{
+                        button.name }}</span>
                 </div>
+                <p
+                    :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                    {{
+                        button.name }}
+                </p>
                 <span class="material-symbols-outlined"
                     :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
             </div>
-            <div v-if="button.number == 22" @click="openSubMenu(button)" :key="button.number"
-                class="px-4 py-3 mt-4 flex"
+            <div v-if="button.number == 22" @click="openSubMenu(button)" @mouseenter="hoverName(button)"
+                @mouseleave="closeHover" :key="button.number" class="px-4 py-3 mt-4 flex"
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100 flex-row justify-between' : 'flex justify-center items-center transition-all delay-100 '">
                 <div class="flex justify-center items-center">
-                    <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">settings</span>
-                    <span
-                        :class="isOpen ? '' : ' hidden truncate'">{{
-                            button.name }}</span>
+                    <span class="material-symbols-outlined mr-1"
+                        :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">settings</span>
+                    <span :class="isOpen ? '' : ' hidden truncate'">{{
+                        button.name }}</span>
+                    <p
+                        :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                        {{
+                            button.name }}
+                    </p>
                 </div>
                 <span class="material-symbols-outlined"
                     :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
@@ -209,24 +259,34 @@
                     </router-link>
                 </div>
             </div>
-            <div v-if="button.number == 24" class=" px-4 py-3 mt-4"
+            <div v-if="button.number == 24" @mouseenter="hoverName(button)" @mouseleave="closeHover" class=" px-4 py-3 mt-4"
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
                 <div class="flex justify-center items-center">
-                    <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">folder_managed</span>
-                    <router-link to="#"
-                        :class="isOpen ? '' : ' hidden truncate'">{{
-                            button.name }}</router-link>
+                    <span class="material-symbols-outlined mr-1"
+                        :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">folder_managed</span>
+                    <router-link to="#" :class="isOpen ? '' : ' hidden truncate'">{{
+                        button.name }}</router-link>
+                    <p
+                        :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                        {{
+                            button.name }}
+                    </p>
                 </div>
             </div>
-            <div v-if="button.number == 25" @click="openSubMenu(button)" :key="button.number"
-                class="px-4 py-3 mt-4 flex "
+            <div v-if="button.number == 25" @click="openSubMenu(button)" @mouseenter="hoverName(button)"
+                @mouseleave="closeHover" :key="button.number" class="px-4 py-3 mt-4 flex "
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100 flex-row justify-between' : 'flex justify-center items-center transition-all delay-100'">
                 <div class="flex items-center justify-center">
-                    <span class="material-symbols-outlined mr-1" :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">description</span>
-                    <span
-                        :class="isOpen ? '' : 'hidden truncate'">{{
-                            button.name }}</span>
+                    <span class="material-symbols-outlined mr-1"
+                        :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">description</span>
+                    <span :class="isOpen ? '' : 'hidden truncate'">{{
+                        button.name }}</span>
                 </div>
+                <p
+                    :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
+                    {{
+                        button.name }}
+                </p>
                 <span class="material-symbols-outlined"
                     :class="subMenuOpen && activeButton === button ? 'rotate-90 ease-in-out duration-500' : 'ease-in-out duration-500', isOpen ? '' : 'hidden'">chevron_right</span>
             </div>
@@ -273,6 +333,7 @@ export default {
             isOpen: ref(true),
             subMenuOpen: ref(false),
             activeButton: null,
+            isHover: ref(false)
         }
     },
     async mounted () {
@@ -340,15 +401,37 @@ export default {
     methods: {
         closeMenu () {
             this.isOpen = !this.isOpen
-        },
-        openSubMenu (button) {
-            if (this.activeButton === button) {
-                this.subMenuOpen = !this.subMenuOpen;
-            } else {
-                this.subMenuOpen = true;
-                this.activeButton = button;
+            if (this.subMenuOpen == true) {
+                this.subMenuOpen = false
             }
         },
+        openSubMenu (button) {
+            if (this.isOpen === true) {
+                if (this.activeButton === button) {
+                    this.subMenuOpen = !this.subMenuOpen;
+                } else {
+                    this.subMenuOpen = true;
+                    this.activeButton = button;
+                }
+            } else if (this.isOpen === false) {
+                this.isHover = false
+                this.isOpen = true
+                this.subMenuOpen = true
+                this.activeButton = button
+            }
+        },
+        hoverName (button) {
+            if (this.isOpen === false) {
+                this.activeButton = button
+                this.isHover = true
+            }
+        },
+        closeHover () {
+            if (this.isOpen === false) {
+                this.activeButton = null
+                this.isHover = false
+            }
+        }
     }
 }
 </script>
