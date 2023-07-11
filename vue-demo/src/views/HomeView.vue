@@ -37,6 +37,7 @@ export default {
             let response = await APIDataServices.getRoles(this.userStore.token)
             const role = JSON.parse(JSON.stringify(response))
             this.roleName = role.data
+            console.log(this.userStore.token)
         },
     }
 }

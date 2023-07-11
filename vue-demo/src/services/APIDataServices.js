@@ -15,6 +15,9 @@ class APIDataServices {
     async getButtonVisibility(data){
         return axios.get(url + 'account/get-button-visibility', {headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${data}`}})
     }
+    async logoff(data){
+        return axios.post(url + 'account/logoff', data)
+    }
 }
 
 export default new APIDataServices

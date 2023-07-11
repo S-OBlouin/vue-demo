@@ -67,7 +67,9 @@ export default {
         })
         if (response.data.accessToken) {
           this.userStore.username = this.username
+          this.userStore.password = this.password
           this.userStore.companyId = this.companyId
+          this.userStore.companyName = this.selected
           this.userStore.token = response.data.accessToken
           this.$router.push({ name: "home" })
         }
