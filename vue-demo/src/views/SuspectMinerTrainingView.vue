@@ -2,7 +2,7 @@
     <div class="flex flex-row h-screen flex-grow bg-gray-300 p-6">
         <div class="flex flex-col bg-white w-1/6 rounded shadow max-h-72 mx-3">
             <p class="bg-slate-100 font-semibold p-2 rounded">Select Miner</p>
-            <div class="max-h-52 overflow-y-scroll">
+            <div class="max-h-52 overflow-y-auto">
                 <div v-for="miner in miners" class="border p-2">
                     <label class="flex justify-between">
                         <span class="ml-1 overflow-x-hidden">{{ miner.name }}</span>
@@ -14,12 +14,18 @@
                 <button @click="showFeatures" class="px-1 py-0.5 m-1 bg-orange-400 rounded">Select</button>
             </div>
         </div>
-        <div v-if="this.showFeature" class="flex flex-col bg-white w-1/6 rounded shadow max-h-72 mx-3">
-            <div v-for="feature in this.selectedMiner.crmFeatures">
-                <label>
-                    <span>{{ }}</span>
-                    <input type="checkbox" name="feature" :id=feature>
-                </label>
+        <div v-if="this.showFeature" class="flex flex-col bg-white w-1/6 rounded shadow max-h-72 mx-3 ">
+            <div class="flex bg-slate-100 p-2 justify-center items-center">
+                <button class="px-1 py-0.5 m-1 bg-orange-400 rounded">CRM Features</button>
+                <button class="px-1 py-0.5 m-1 bg-orange-400 rounded">TRX Features</button>
+            </div>
+            <div class="max-h-52 overflow-y-auto">
+                <div v-for="feature in this.crmfeature" class="border p-2">
+                    <label class="flex justify-between">
+                        <span>{{ feature }}</span>
+                        <input type="checkbox" name="feature" :id=feature class="ml-1 overflow-x-hidden">
+                    </label>
+                </div>
             </div>
         </div>
     </div>
@@ -29,7 +35,7 @@
 import MinerDataServices from '@/services/MinerDataServices.js'
 import { useUserStore } from '@/stores/UserStore';
 export default {
-    setup(){
+    setup () {
         const store = useUserStore()
 
         return { store }
@@ -40,12 +46,13 @@ export default {
             miners: [],
             features: [],
             feature: [],
+            crmfeature: [],
             selectedMiner: "",
             selectedFeatures: [],
             showFeature: false,
         }
     },
-    async mounted(){
+    async mounted () {
         try {
             const res = await MinerDataServices.getMiners(this.store.token)
             const res2 = await MinerDataServices.getMiners(this.store.token)
@@ -55,16 +62,17 @@ export default {
             console.error(error)
         }
     },
-    methods:{
-        showFeatures(){
-            this.feature = this.selectedMiner.crmFeatures.replaceAll(/\"+/gm, '')
+    methods: {
+        showFeatures () {
+            this.crmfeature = []
             this.feature = this.selectedMiner.crmFeatures.split(',')
             this.feature.forEach(element => {
-                console.log(element)
-                element.replaceAll(/\"+/gm, '')
-                console.log(element)
+                element = element.replaceAll(/['"]+/g, '')
+                element = element.replaceAll(/\[/g, '')
+                element = element.replaceAll(/\]/g, '')
+                this.crmfeature.push(element)
             });
-            console.log(this.feature)
+            this.showFeature = true
         }
     }
 }
