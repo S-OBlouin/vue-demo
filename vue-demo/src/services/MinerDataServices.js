@@ -9,6 +9,9 @@ class MinerDataServices {
     async getFeatures(data){
         return await axios.get(url + 'MinerTraining/features', {headers: {'Authorization': `Bearer ${data}`}})
     }
+    async getStatuses(data){
+        return await axios.get(url + 'alert/statuses', {headers: {'Authorization': `Bearer ${data}`}})
+    }
 }
 
 export default new MinerDataServices
