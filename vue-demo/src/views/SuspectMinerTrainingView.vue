@@ -1,11 +1,12 @@
 <template>
     <div class="flex flex-row h-screen flex-grow bg-gray-300">
-        <div v-if="crmOpen" class="  w-full h-full fixed flex justify-center p-0 ">
+        <div v-if="crmOpen" class="  w-full h-full fixed flex justify-center p-0 justify-items-center">
             <div class="bg-gray-600/50 z-30 relative flex justify-center flex-grow">
-                <div class=" bg-white h-fit w-60 z-50 top-5 left-[34rem] absolute rounded">
+                <div class=" bg-white h-fit w-60 z-50 top-5 absolute rounded">
                     <div class="flex justify-between bg-slate-100">
                         <p class=" font-semibold p-2 rounded">Add CRM Features</p>
-                        <span class="material-symbols-outlined rounded p-1 flex items-center cursor-pointer" @click="closeCRM">close</span>
+                        <span class="material-symbols-outlined rounded p-1 flex items-center cursor-pointer"
+                            @click="closeCRM">close</span>
                     </div>
                     <div class="max-h-72 overflow-y-auto">
                         <div v-for="feature in this.features" class="border p-2">
@@ -35,8 +36,31 @@
                 <button @click="showFeatures" class="px-1 py-0.5 m-1 bg-orange-400 rounded">Select</button>
             </div>
         </div>
-        <div>
-            
+        <div v-if="this.showFeature">
+            <div class="flex flex-col bg-white min-w-[24rem] rounded shadow max-h-72 m-6">
+                <p class="bg-slate-100 font-semibold p-2 rounded">Status</p>
+                <div class="max-h-64">
+                    <div v-for="status in this.statuses.statuses" class="border p-2 flex justify-between">
+                        <label class="flex justify-between">
+                            <span class="ml-1 overflow-x-hidden">{{ status }}</span>
+                        </label>
+                        <div>
+                            <label class="mr-2">
+                                <span>SAR</span>
+                                <input type="radio" :v-model="selectedStatus" :value="1">
+                            </label>
+                            <label class="mr-2">
+                                <span>Clear</span>
+                                <input type="radio" :v-model="selectedStatus" :value="2">
+                            </label>
+                            <label class="mr-2">
+                                <span>Unknown</span>
+                                <input type="radio" :v-model="selectedStatus" :value="3">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div v-if="this.showFeature" class="flex flex-col bg-white w-1/6 rounded shadow max-h-72 mx-3 my-6">
             <div class="flex bg-slate-100 p-2 justify-center items-center">
@@ -51,7 +75,7 @@
                     </label>
                 </div>
             </div>
-            <div class="flex items-center justify-center ">
+            <div class="flex items-end justify-center ">
                 <button @click="delFeature" class="px-1 py-0.5 m-1 bg-orange-400 rounded">Remove</button>
             </div>
         </div>
@@ -77,6 +101,7 @@ export default {
             selectedFeatures: [],
             checkedFeature: [],
             statuses: [],
+            selectedStatus: [],
             showFeature: false,
             crmOpen: false,
         }
@@ -85,6 +110,7 @@ export default {
         try {
             const res = await MinerDataServices.getMiners(this.store.token)
             this.miners = JSON.parse(JSON.stringify(res.data))
+            console.log(typeof this.miners)
         } catch (error) {
             console.error(error)
         }
@@ -102,19 +128,19 @@ export default {
                 this.crmfeature.push(element)
             });
             this.showFeature = true
-            console.log(this.statuses)
+            console.log(typeof this.statuses.statuses)
         },
-        async showCRM(){
+        async showCRM () {
             const res2 = await MinerDataServices.getFeatures(this.store.token)
             this.features = JSON.parse(JSON.stringify(res2.data))
             this.crmOpen = !this.crmOpen
         },
-        closeCRM(){
+        closeCRM () {
             this.crmOpen = !this.crmOpen
         },
-        addFeatures(){
-            this.selectedFeatures.forEach(e =>{
-                if(this.crmfeature.includes(e)){
+        addFeatures () {
+            this.selectedFeatures.forEach(e => {
+                if (this.crmfeature.includes(e)) {
 
                 } else {
                     this.crmfeature.push(e)
@@ -122,7 +148,7 @@ export default {
             })
             this.crmOpen = !this.crmOpen
         },
-        delFeature(){
+        delFeature () {
             this.crmfeature = this.crmfeature.filter((e) => {
                 return !this.checkedFeature.includes(e)
             })
