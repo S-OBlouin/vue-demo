@@ -47,15 +47,18 @@
                         <div>
                             <label class="mr-2">
                                 <span>SAR</span>
-                                <input type="radio" :v-model="selectedStatus" :value="1">
+                                <input type="radio" :name="status" :checked="`checkedSAR ${status}`"
+                                    :v-model="selectedStatus" :value="1">
                             </label>
                             <label class="mr-2">
                                 <span>Clear</span>
-                                <input type="radio" :v-model="selectedStatus" :value="2">
+                                <input type="radio" :name="status" :checked="`checkedClear ${status}`"
+                                    :v-model="selectedStatus" :value="2">
                             </label>
                             <label class="mr-2">
                                 <span>Unknown</span>
-                                <input type="radio" :v-model="selectedStatus" :value="3">
+                                <input type="radio" :name="status" :checked="`checkedUnknown ${status}`"
+                                    :v-model="selectedStatus" :value="3">
                             </label>
                         </div>
                     </div>
@@ -102,6 +105,25 @@ export default {
             checkedFeature: [],
             statuses: [],
             selectedStatus: [],
+            checkedStatus: [],
+            checkedSAR2: false,
+            checkedClear2: false,
+            checkedUnknown2: false,
+            checkedSAR4: false,
+            checkedClear4: false,
+            checkedUnknown4: false,
+            checkedSAR6: false,
+            checkedClear6: false,
+            checkedUnknown6: false,
+            checkedSAR9: false,
+            checkedClear9: false,
+            checkedUnknown9: false,
+            checkedSARRed: false,
+            checkedClearRed: false,
+            checkedUnknownRed: false,
+            checkedSARTam: false,
+            checkedClearTam: false,
+            checkedUnknownTam: false,
             showFeature: false,
             crmOpen: false,
         }
@@ -110,7 +132,6 @@ export default {
         try {
             const res = await MinerDataServices.getMiners(this.store.token)
             this.miners = JSON.parse(JSON.stringify(res.data))
-            console.log(typeof this.miners)
         } catch (error) {
             console.error(error)
         }
@@ -128,7 +149,69 @@ export default {
                 this.crmfeature.push(element)
             });
             this.showFeature = true
-            console.log(typeof this.statuses.statuses)
+            const status = this.selectedMiner.statuses.split(',')
+            status.forEach(element => {
+                element = element.replaceAll(/['"]+/g, '')
+                element = element.replaceAll(/\{/g, '')
+                element = element.replaceAll(/\}/g, '')
+                this.checkedStatus.push(element)
+            });
+            this.checkedStatus.forEach(e => {
+                if (e.includes('2')) {
+                    if (e.includes('0')) {
+                        this.checkedClear2 = true
+                    } else if (e.includes('1')) {
+                        this.checkedSAR2 = true
+                    } else if (e.includes('3')) {
+                        this.checkedUnknown2 = true
+                    }
+                }
+                if (e.includes('4')) {
+                    if (e.includes('0')) {
+                        this.checkedClear4 = true
+                    } else if (e.includes('1')) {
+                        this.checkedSAR4 = true
+                    } else if (e.includes('3')) {
+                        this.checkedUnknown4 = true
+                    }
+                }
+                if (e.includes('6')) {
+                    if (e.includes('0')) {
+                        this.checkedClear6 = true
+                    } else if (e.includes('1')) {
+                        this.checkedSAR6 = true
+                    } else if (e.includes('3')) {
+                        this.checkedUnknown6 = true
+                    }
+                }
+                if (e.includes('9')) {
+                    if (e.includes('0')) {
+                        this.checkedClear9 = true
+                    } else if (e.includes('1')) {
+                        this.checkedSAR9 = true
+                    } else if (e.includes('3')) {
+                        this.checkedUnknown9 = true
+                    }
+                }
+                if (e.includes('RED')) {
+                    if (e.includes('0')) {
+                        this.checkedClearRed = true
+                    } else if (e.includes('1')) {
+                        this.checkedSARRed = true
+                    } else if (e.includes('3')) {
+                        this.checkedUnknownRed = true
+                    }
+                }
+                if (e.includes('TAMAMLANDI')) {
+                    if (e.includes('0')) {
+                        this.checkedClearTam = true
+                    } else if (e.includes('1')) {
+                        this.checkedSARTam = true
+                    } else if (e.includes('3')) {
+                        this.checkedUnknownTam = true
+                    }
+                }
+            })
         },
         async showCRM () {
             const res2 = await MinerDataServices.getFeatures(this.store.token)
