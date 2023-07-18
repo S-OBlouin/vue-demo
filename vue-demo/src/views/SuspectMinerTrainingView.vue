@@ -33,34 +33,136 @@
                 </div>
             </div>
             <div class="flex items-center justify-center ">
-                <button @click="showFeatures" class="px-1 py-0.5 m-1 bg-orange-400 rounded">Select</button>
+                <button @click="showFeatures(); showSettings();" class="px-1 py-0.5 m-1 bg-orange-400 rounded">Select</button>
             </div>
         </div>
         <div v-if="this.showFeature">
             <div class="flex flex-col bg-white min-w-[24rem] rounded shadow max-h-72 m-6">
                 <p class="bg-slate-100 font-semibold p-2 rounded">Status</p>
                 <div class="max-h-64">
-                    <div v-for="status in this.statuses.statuses" class="border p-2 flex justify-between">
+                    <div v-for="status in this.statuses.statuses" :key="status" class="border p-2 flex justify-between">
                         <label class="flex justify-between">
                             <span class="ml-1 overflow-x-hidden">{{ status }}</span>
                         </label>
-                        <div>
+                        <div v-if="status =='2'">
                             <label class="mr-2">
                                 <span>SAR</span>
-                                <input type="radio" :name="status" :checked="`checkedSAR ${status}`"
+                                <input type="radio" :name="status" :checked="checkedSAR.SAR2"
                                     :v-model="selectedStatus" :value="1">
                             </label>
                             <label class="mr-2">
                                 <span>Clear</span>
-                                <input type="radio" :name="status" :checked="`checkedClear ${status}`"
+                                <input type="radio" :name="status" :checked="checkedClear.Clear2"
                                     :v-model="selectedStatus" :value="2">
                             </label>
                             <label class="mr-2">
                                 <span>Unknown</span>
-                                <input type="radio" :name="status" :checked="`checkedUnknown ${status}`"
+                                <input type="radio" :name="status" :checked="checkedUnknown.Unknown2"
                                     :v-model="selectedStatus" :value="3">
                             </label>
                         </div>
+                        <div v-if="status =='4'">
+                            <label class="mr-2">
+                                <span>SAR</span>
+                                <input type="radio" :name="status" :checked="checkedSAR.SAR4"
+                                    :v-model="selectedStatus" :value="1">
+                            </label>
+                            <label class="mr-2">
+                                <span>Clear</span>
+                                <input type="radio" :name="status" :checked="checkedClear.Clear4"
+                                    :v-model="selectedStatus" :value="2">
+                            </label>
+                            <label class="mr-2">
+                                <span>Unknown</span>
+                                <input type="radio" :name="status" :checked="checkedUnknown.Unknown4"
+                                    :v-model="selectedStatus" :value="3">
+                            </label>
+                        </div>
+                        <div v-if="status =='6'">
+                            <label class="mr-2">
+                                <span>SAR</span>
+                                <input type="radio" :name="status" :checked="checkedSAR.SAR6"
+                                    :v-model="selectedStatus" :value="1">
+                            </label>
+                            <label class="mr-2">
+                                <span>Clear</span>
+                                <input type="radio" :name="status" :checked="checkedClear.Clear6"
+                                    :v-model="selectedStatus" :value="2">
+                            </label>
+                            <label class="mr-2">
+                                <span>Unknown</span>
+                                <input type="radio" :name="status" :checked="checkedUnknown.Unknown6"
+                                    :v-model="selectedStatus" :value="3">
+                            </label>
+                        </div>
+                        <div v-if="status =='9'">
+                            <label class="mr-2">
+                                <span>SAR</span>
+                                <input type="radio" :name="status" :checked="checkedSAR.SAR9"
+                                    :v-model="selectedStatus" :value="1">
+                            </label>
+                            <label class="mr-2">
+                                <span>Clear</span>
+                                <input type="radio" :name="status" :checked="checkedClear.Clear9"
+                                    :v-model="selectedStatus" :value="2">
+                            </label>
+                            <label class="mr-2">
+                                <span>Unknown</span>
+                                <input type="radio" :name="status" :checked="checkedUnknown.Unknown9"
+                                    :v-model="selectedStatus" :value="3">
+                            </label>
+                        </div>
+                        <div v-if="status =='RED'">
+                            <label class="mr-2">
+                                <span>SAR</span>
+                                <input type="radio" :name="status" :checked="checkedSAR.SARRED"
+                                    :v-model="selectedStatus" :value="1">
+                            </label>
+                            <label class="mr-2">
+                                <span>Clear</span>
+                                <input type="radio" :name="status" :checked="checkedClear.ClearRED"
+                                    :v-model="selectedStatus" :value="2">
+                            </label>
+                            <label class="mr-2">
+                                <span>Unknown</span>
+                                <input type="radio" :name="status" :checked="checkedUnknown.UnknownRED"
+                                    :v-model="selectedStatus" :value="3">
+                            </label>
+                        </div>
+                        <div v-if="status =='TAMAMLANDI'">
+                            <label class="mr-2">
+                                <span>SAR</span>
+                                <input type="radio" :name="status" :checked="checkedSAR.SARTAMAMLANDI"
+                                    :v-model="selectedStatus" :value="1">
+                            </label>
+                            <label class="mr-2">
+                                <span>Clear</span>
+                                <input type="radio" :name="status" :checked="checkedClear.ClearTAMAMLANDI"
+                                    :v-model="selectedStatus" :value="2">
+                            </label>
+                            <label class="mr-2">
+                                <span>Unknown</span>
+                                <input type="radio" :name="status" :checked="checkedUnknown.UnknownTAMAMLANDI"
+                                    :v-model="selectedStatus" :value="3">
+                            </label>
+                        </div>
+                        <!-- <div>
+                            <label class="mr-2">
+                                <span>SAR</span>
+                                <input type="radio" :name="status" :checked="checkedSAR[`SAR + ${status}`]"
+                                    :v-model="selectedStatus" :value="1">
+                            </label>
+                            <label class="mr-2">
+                                <span>Clear</span>
+                                <input type="radio" :name="status" :checked="checkedClear[`Clear + ${status}`]"
+                                    :v-model="selectedStatus" :value="2">
+                            </label>
+                            <label class="mr-2">
+                                <span>Unknown</span>
+                                <input type="radio" :name="status" :checked="checkedUnknown[`Unknown + ${status}`]"
+                                    :v-model="selectedStatus" :value="3">
+                            </label>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -106,24 +208,30 @@ export default {
             statuses: [],
             selectedStatus: [],
             checkedStatus: [],
-            checkedSAR2: false,
-            checkedClear2: false,
-            checkedUnknown2: false,
-            checkedSAR4: false,
-            checkedClear4: false,
-            checkedUnknown4: false,
-            checkedSAR6: false,
-            checkedClear6: false,
-            checkedUnknown6: false,
-            checkedSAR9: false,
-            checkedClear9: false,
-            checkedUnknown9: false,
-            checkedSARRed: false,
-            checkedClearRed: false,
-            checkedUnknownRed: false,
-            checkedSARTam: false,
-            checkedClearTam: false,
-            checkedUnknownTam: false,
+            checkedSAR: {
+                SAR2: false,
+                SAR4: false,
+                SAR6: false,
+                SAR9: false,
+                SARRED: false,
+                SARTAMAMLANDI: false,
+            },
+            checkedClear: {
+                Clear2: false,
+                Clear4: false,
+                Clear6: false,
+                Clear9: false,
+                ClearRED: false,
+                ClearTAMAMLANDI: false,
+            },
+            checkedUnknown: {
+                Unknown2: false,
+                Unknown4: false,
+                Unknown6: false,
+                Unknown9: false,
+                UnknownRED: false,
+                UnknownTAMAMLANDI: false,
+            },
             showFeature: false,
             crmOpen: false,
         }
@@ -132,14 +240,15 @@ export default {
         try {
             const res = await MinerDataServices.getMiners(this.store.token)
             this.miners = JSON.parse(JSON.stringify(res.data))
+            this.miners = this.miners.filter(miner => miner.statuses !== null && miner.name != 'Sanction Matcher')
+            console.log(this.miners)
         } catch (error) {
             console.error(error)
         }
     },
     methods: {
         async showFeatures () {
-            const res = await MinerDataServices.getStatuses(this.store.token)
-            this.statuses = JSON.parse(JSON.stringify(res.data))
+            //reminder for meeting tomorrow 18th
             this.crmfeature = []
             const feature = this.selectedMiner.crmFeatures.split(',')
             feature.forEach(element => {
@@ -149,6 +258,34 @@ export default {
                 this.crmfeature.push(element)
             });
             this.showFeature = true
+        },
+        async showSettings(){
+            this.checkedSAR = [{
+                SAR2: false,
+                SAR4: false,
+                SAR6: false,
+                SAR9: false,
+                SARRED: false,
+                SARTAMAMLANDI: false,
+            }],
+            this.checkedClear = {
+                Clear2: false,
+                Clear4: false,
+                Clear6: false,
+                Clear9: false,
+                ClearRED: false,
+                ClearTAMAMLANDI: false,
+            },
+            this.checkedUnknown = {
+                Unknown2: false,
+                Unknown4: false,
+                Unknown6: false,
+                Unknown9: false,
+                UnknownRED: false,
+                UnknownTAMAMLANDI: false,
+            }
+            const res = await MinerDataServices.getStatuses(this.store.token)
+            this.statuses = JSON.parse(JSON.stringify(res.data))
             const status = this.selectedMiner.statuses.split(',')
             status.forEach(element => {
                 element = element.replaceAll(/['"]+/g, '')
@@ -159,56 +296,56 @@ export default {
             this.checkedStatus.forEach(e => {
                 if (e.includes('2')) {
                     if (e.includes('0')) {
-                        this.checkedClear2 = true
+                        this.checkedClear.Clear2 = true
                     } else if (e.includes('1')) {
-                        this.checkedSAR2 = true
+                        this.checkedSAR.SAR2 = true
                     } else if (e.includes('3')) {
-                        this.checkedUnknown2 = true
+                        this.checkedUnknown.Unknown2 = true
                     }
                 }
                 if (e.includes('4')) {
                     if (e.includes('0')) {
-                        this.checkedClear4 = true
+                        this.checkedClear.Clear4 = true
                     } else if (e.includes('1')) {
-                        this.checkedSAR4 = true
+                        this.checkedSAR.SAR4 = true
                     } else if (e.includes('3')) {
-                        this.checkedUnknown4 = true
+                        this.checkedUnknown.Unknown4 = true
                     }
                 }
                 if (e.includes('6')) {
                     if (e.includes('0')) {
-                        this.checkedClear6 = true
+                        this.checkedClear.Clear6 = true
                     } else if (e.includes('1')) {
-                        this.checkedSAR6 = true
+                        this.checkedSAR.SAR6 = true
                     } else if (e.includes('3')) {
-                        this.checkedUnknown6 = true
+                        this.checkedUnknown.Unknown6 = true
                     }
                 }
                 if (e.includes('9')) {
                     if (e.includes('0')) {
-                        this.checkedClear9 = true
+                        this.checkedClear.Clear9 = true
                     } else if (e.includes('1')) {
-                        this.checkedSAR9 = true
+                        this.checkedSAR.SAR9 = true
                     } else if (e.includes('3')) {
-                        this.checkedUnknown9 = true
+                        this.checkedUnknown.Unknown9 = true
                     }
                 }
                 if (e.includes('RED')) {
                     if (e.includes('0')) {
-                        this.checkedClearRed = true
+                        this.checkedClear.ClearRed = true
                     } else if (e.includes('1')) {
-                        this.checkedSARRed = true
+                        this.checkedSAR.SARRed = true
                     } else if (e.includes('3')) {
-                        this.checkedUnknownRed = true
+                        this.checkedUnknown.UnknownRED = true
                     }
                 }
                 if (e.includes('TAMAMLANDI')) {
                     if (e.includes('0')) {
-                        this.checkedClearTam = true
+                        this.checkedClear.ClearTAMAMLANDI = true
                     } else if (e.includes('1')) {
-                        this.checkedSARTam = true
+                        this.checkedSAR.SARTAMAMLANDI = true
                     } else if (e.includes('3')) {
-                        this.checkedUnknownTam = true
+                        this.checkedUnknown.UnknownTAMAMLANDI = true
                     }
                 }
             })
