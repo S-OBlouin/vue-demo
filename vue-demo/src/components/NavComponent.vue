@@ -82,7 +82,7 @@
             <div v-if="subMenuOpen && activeButton.number == 6">
                 <div v-if="button.number === 7" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="/suspect-miner/training" @click="this.userStore.pageName = button.name"
+                    <router-link :to="button.link" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
@@ -138,7 +138,7 @@
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
                 <span @mouseenter="hoverName(button)" @mouseleave="closeHover" class="material-symbols-outlined mr-1"
                     :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">task</span>
-                <router-link to="#" :class="isOpen ? '' : ' hidden truncate'">{{
+                <router-link :to="button.link" :class="isOpen ? '' : ' hidden truncate'">{{
                     button.name }}</router-link>
                 <p
                     :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
@@ -345,7 +345,7 @@ export default {
                         this.buttonVisibility.push({ number: 5, name: 'Incorporation', link: 'incorporation' })
                     } else if (button == 10) {
                         this.buttonVisibility.push({ number: 6, name: 'Suspect Miner', link: '' })
-                        this.buttonVisibility.push({ number: 7, name: 'Miner Training', link: 'suspectMinerTraining' })
+                        this.buttonVisibility.push({ number: 7, name: 'Miner Training', link: '/suspect-miner/training' })
                     } else if (button == 6) {
                         this.buttonVisibility.push({ number: 8, name: 'Miner Scheduling', link: 'minerScheduling' })
                     } else if (button == 8) {
@@ -356,7 +356,7 @@ export default {
                         this.buttonVisibility.push({ number: 11, name: 'Link Miner', link: '' })
                         this.buttonVisibility.push({ number: 12, name: 'Miner Training', link: 'linkMinerTraining' })
                     } else if (button == 4) {
-                        this.buttonVisibility.push({ number: 13, name: 'Task Manager', link: 'taskManager' })
+                        this.buttonVisibility.push({ number: 13, name: 'Task Manager', link: '/task-manager' })
                     } else if (button == 3) {
                         this.buttonVisibility.push({ number: 14, name: 'Activity Log', link: 'activityLog' })
                     } else if (button == 15) {

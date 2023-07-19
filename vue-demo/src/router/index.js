@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
+import TaskManagerView from '@/views/TaskManagerView.vue'
 import SuspectMinerTraining from '@/views/SuspectMinerTrainingView.vue'
 import { useUserStore } from '@/stores/UserStore';
 
@@ -23,7 +24,12 @@ const router = createRouter({
       path: '/suspect-miner/training',
       name: 'suspectMinerTraining',
       component: SuspectMinerTraining
-    }
+    },
+    {
+      path: '/task-manager',
+      name: 'taskManager',
+      component: TaskManagerView
+    },
   ]
 })
 
