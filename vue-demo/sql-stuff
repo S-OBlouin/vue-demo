@@ -1,0 +1,11 @@
+create table Menu 
+(
+  MenuId int not null,
+  Name varchar(255) not null,
+  Link varchar(510) not null,
+  IconCode varchar(255) not null,
+  ParentMenuId int,
+  isActive bool,
+  CONSTRAINT menuPK PRIMARY KEY (MenuId)
+)
+  
