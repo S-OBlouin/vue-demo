@@ -3,7 +3,7 @@
     <NavComponent v-if="isLogin" class=" z-10"/>
     <div class="flex flex-grow flex-col">
       <HeaderComponent v-if="isLogin"/>
-      <RouterView />
+      <RouterView class="bg-gray-300"/>
     </div>
   </div>
 </template>

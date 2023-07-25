@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row h-screen flex-grow bg-gray-300">
+    <div class="flex flex-row h-screen flex-grow">
         <div v-if="crmOpen" class="  w-full h-full fixed flex justify-center p-0 justify-items-center">
             <div class="bg-gray-600/50 z-30 relative flex justify-center flex-grow">
                 <div class=" bg-white h-fit w-60 z-50 top-5 absolute rounded">

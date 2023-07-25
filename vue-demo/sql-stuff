@@ -16,7 +16,7 @@ CREATE SEQUENCE seqId
   NOCACHE;
   
 INSERT INTO Menu (MenuId, Name, Link, IconCode, isActive)
-VALUES(seqId.NEXTVAL, 'Test', '/test', 'description', false)
+VALUES(seqId.NEXTVAL, this.name, this.link, this.iconCode, this.isActive)
 
 INSERT INTO Menu (MenuId, Name, Link, IconCode, ParentMenuId, isActive)
-VALUES(seqId.NEXTVAL, 'Test2', '/test2', 'description', 1, true)
+VALUES(seqId.NEXTVAL, this.name, this.link, this.iconCode, this.parentMenuId, this.isActive)
