@@ -13,7 +13,7 @@ class MinerDataServices {
     return await axios.get(url + "alert/statuses", { headers: { Authorization: `Bearer ${data}` } });
   }
   async getActivities(data, token) {
-    return await axios.post(url + "activity/run-activities", { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, data: { data } });
+    return await axios.post(url + "activity/run-activities", { data: { data }, headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } });
   }
   async getMinerList(data) {
     return await axios.get(url + "activity/get-miner-list", { headers: { Authorization: `Bearer ${data}` } });

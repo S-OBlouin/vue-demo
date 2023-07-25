@@ -1,11 +1,22 @@
 create table Menu 
 (
   MenuId int not null,
-  Name varchar(255) not null,
-  Link varchar(510) not null,
-  IconCode varchar(255) not null,
+  Name varchar2(255) not null,
+  Link varchar2(510) not null,
+  IconCode varchar2(255) not null,
   ParentMenuId int,
   isActive bool,
   CONSTRAINT menuPK PRIMARY KEY (MenuId)
 )
+
+CREATE SEQUENCE seqId
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
   
+INSERT INTO Menu (MenuId, Name, Link, IconCode, isActive)
+VALUES(seqId.NEXTVAL, 'Test', '/test', 'description', false)
+
+INSERT INTO Menu (MenuId, Name, Link, IconCode, ParentMenuId, isActive)
+VALUES(seqId.NEXTVAL, 'Test2', '/test2', 'description', 1, true)
