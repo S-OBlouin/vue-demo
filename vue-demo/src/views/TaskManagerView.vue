@@ -61,8 +61,10 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="">
-
+            <div class="flex flex-row-reverse">
+                <div class="flex">
+                    <p>Page </p> <span class="material-symbols-outlined text-lg font-bold cursor-pointer" @click="goBack">chevron_left</span><span>{{ this.page + 1 }} </span><span class="material-symbols-outlined text-lg font-bold cursor-pointer" @click="goForward">chevron_right</span>
+                </div>
             </div>
         </section>
     </main>
@@ -71,6 +73,7 @@
 <script>
 import MinerDataServices from '@/services/MinerDataServices.js'
 import { useUserStore } from '@/stores/UserStore';
+import { ref } from 'vue';
 export default {
     name: 'TaskManagerView',
     setup () {
@@ -83,7 +86,7 @@ export default {
             miners: [],
             minersId: [],
             activities: [],
-            page: 0,
+            page: ref(0),
             username: '',
             selectedMiners: [],
             count: 0,
@@ -143,8 +146,13 @@ export default {
                     this.selectedMiners.push(miner.name)
                 });
             }
-            console.log(this.miners)
-        }
+        },
+        goBack(){
+            this.page = this.page - 1
+        },
+        goForward(){
+            this.page = this.page + 1
+        },
     }
 }
 </script>
