@@ -1,7 +1,7 @@
 <template>
     <main class="h-screen flex flex-grow flex-col">
-        <div class="w-full h-full fixed flex justify-center p-0 justify-items-center">
-            <div v-if="selectMiner" class="bg-gray-600/50 z-30 relative flex justify-center flex-grow">
+        <div v-if="selectMiner" class="w-full h-full fixed flex justify-center p-0 justify-items-center">
+            <div class="bg-gray-600/50 z-30 relative flex justify-center flex-grow">
                 <div class=" bg-white h-fit w-60 z-50 top-5 right-1/2 absolute rounded">
                     <div class="flex justify-between bg-slate-100">
                         <p class=" font-semibold p-2 rounded">Select Miners</p>
@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="flex items-center justify-center my-1">
-                        <button @click="checked" class="px-1 py-0.5 m-1 bg-orange-400 rounded">{{buttonText}}</button>
+                        <button @click="checked" class="px-1 py-0.5 m-1 bg-orange-400 rounded">{{ buttonText }}</button>
                     </div>
                 </div>
             </div>
@@ -25,19 +25,23 @@
         <header class="flex flex-row justify-between h-fit mt-2 mx-2">
             <div class="flex flex-row">
                 <label>
-                    <input type="text" v-model="username" class=" mx-1 my-1 p-0.5 border-black border-b" placeholder="Username">
+                    <input type="text" v-model="username" class=" mx-1 my-1 p-0.5 border-black border-b"
+                        placeholder="Username">
                 </label>
                 <label class="relative" @click="openMiners">
-                    <input type="text" v-model="selectedMiners" class=" mx-1 my-1 p-0.5 pr-5 border-black border-b truncate pointer-events-none" disabled>
+                    <input type="text" v-model="selectedMiners"
+                        class=" mx-1 my-1 p-0.5 pr-5 border-black border-b truncate pointer-events-none" disabled>
                     <span class="material-symbols-outlined absolute p-0.5 top-1 right-0.5">expand_more</span>
                 </label>
             </div>
             <div>
-                <button class=" bg-white p-1 border-yellow-600 border text-yellow-600 mx-3 my-1 hover:bg-yellow-600 hover:text-white hover:transition-all hover:delay-50">Refresh</button>
+                <button
+                    class=" bg-white p-1 border-yellow-600 border text-yellow-600 mx-3 my-1 hover:bg-yellow-600 hover:text-white hover:transition-all hover:delay-50"
+                    @click="refresh">Refresh</button>
             </div>
         </header>
         <section class="m-1 px-10 flex flex-col">
-            <table class=" text-center">
+            <table class=" table-fixed text-center">
                 <thead>
                     <tr class="flex justify-around border-b border-slate-500 text-sm">
                         <th class=" w-1/12">Status</th>
@@ -50,20 +54,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="activity in this.activities" class="flex justify-around truncate border-b border-slate-500 text-sm" :key="activity.runId">
+                    <tr v-for="activity in this.activities"
+                        class="flex justify-around truncate border-b border-slate-500 text-sm" :key="activity.runId">
                         <td class=" w-1/12 truncate px-1 py-1">{{ activity.status }}</td>
                         <td class=" w-1/6 truncate px-1 py-1">{{ activity.miner?.name }}</td>
                         <td class=" w-1/12 truncate px-1 py-1">{{ activity.username }}</td>
                         <td class=" w-1/6 truncate px-1 py-1">{{ activity.moduleType }}</td>
-                        <td class=" w-1/12 truncate px-1 py-1">{{ activity.errorDescription || '' }}</td>
+                        <td class=" w-1/12 max-w-prose truncate px-1 py-1">{{ activity.errorDescription || '' }}</td>
                         <td class=" w-1/6 truncate px-1 py-1">{{ formatDateTime(activity.startDate) }}</td>
-                        <td class=" w-1/6 truncate px-1 py-1">{{ formatDateTime(activity.endDate)}}</td>
+                        <td class=" w-1/6 truncate px-1 py-1">{{ formatDateTime(activity.endDate) }}</td>
                     </tr>
                 </tbody>
             </table>
             <div class="flex flex-row-reverse">
                 <div class="flex">
-                    <p>Page </p> <span class="material-symbols-outlined text-lg font-bold cursor-pointer" @click="goBack">chevron_left</span><span>{{ this.page + 1 }} </span><span class="material-symbols-outlined text-lg font-bold cursor-pointer" @click="goForward">chevron_right</span>
+                    <p>Page </p> <span class="material-symbols-outlined text-lg font-bold cursor-pointer"
+                        @click="goBack">chevron_left</span><span>{{
+                            this.page + 1 }} </span><span class="material-symbols-outlined text-lg font-bold cursor-pointer"
+                        @click="goForward">chevron_right</span>
                 </div>
             </div>
         </section>
@@ -87,44 +95,43 @@ export default {
             minersId: [],
             activities: [],
             page: ref(0),
-            username: '',
+            date: ref(null),
+            username: ref(''),
             selectedMiners: [],
             count: 0,
             selectMiner: false,
             buttonText: 'Deselect All',
         }
     },
-    async mounted () {
+    async created () {
         try {
             const response = await MinerDataServices.getMinerList(this.store.token)
             this.miners = JSON.parse(JSON.stringify(response.data))
             this.miners.forEach(miner => {
-                const minerId = miner.id
-                const minerName = miner.name
-                this.minersId.push(minerId)
-                this.selectedMiners.push(minerName)
+                this.minersId.push(miner.id)
+                this.selectedMiners.push(miner.name)
             })
             if (this.minersId) {
                 let data = JSON.stringify({
-                "page": 0,
-                "username": "",
-                "miners": this.minersId,
-                "date": null
+                    "page": 0,
+                    "username": "",
+                    "miners": this.minersId,
+                    "date": null
                 });
                 const res = await MinerDataServices.getActivities(data, this.store.token)
                 this.activities = JSON.parse(JSON.stringify(res.data.data))
                 this.count = JSON.parse(JSON.stringify(res.data.count))
             }
-            } catch (error) {
-                console.log(error)
-            }
+        } catch (error) {
+            console.log(error)
+        }
     },
     methods: {
-        openMiners(){
+        openMiners () {
             this.selectMiner = !this.selectMiner
         },
-        formatDateTime(isoDate) {
-            if (isoDate) {                
+        formatDateTime (isoDate) {
+            if (isoDate) {
                 const date = new Date(isoDate);
                 const day = String(date.getDate()).padStart(2, "0");
                 const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -136,8 +143,8 @@ export default {
                 return ''
             }
         },
-        checked(){
-            if(this.buttonText == 'Deselect All'){
+        checked () {
+            if (this.buttonText == 'Deselect All') {
                 this.selectedMiners = []
                 this.buttonText = 'Select All'
             } else {
@@ -147,12 +154,46 @@ export default {
                 });
             }
         },
-        goBack(){
-            this.page = this.page - 1
+        async goBack () {
+            if (this.page > 0) {
+                this.page = this.page - 1
+                let data = JSON.stringify({
+                    "page": this.page,
+                    "username": this.username,
+                    "miners": this.minersId,
+                    "date": this.date
+                });
+                const res = await MinerDataServices.getActivities(data, this.store.token)
+                this.activities = JSON.parse(JSON.stringify(res.data.data))
+            }
         },
-        goForward(){
+        async goForward () {
             this.page = this.page + 1
+            let data = JSON.stringify({
+                "page": this.page,
+                "username": this.username,
+                "miners": this.minersId,
+                "date": this.date
+            });
+            const res = await MinerDataServices.getActivities(data, this.store.token)
+            this.activities = JSON.parse(JSON.stringify(res.data.data))
         },
+        async refresh () {
+            this.minersId = []
+            const selminers = this.miners.filter((m) => this.selectedMiners.includes(m.name))
+            selminers.forEach((e) => {
+                this.minersId.push(e.id)
+            })
+            let data = JSON.stringify({
+                "page": this.page,
+                "username": this.username,
+                "miners": this.minersId,
+                "date": this.date
+            });
+            const res = await MinerDataServices.getActivities(data, this.store.token)
+            this.activities = JSON.parse(JSON.stringify(res.data.data))
+            console.log(this.activities)
+        }
     }
 }
 </script>
