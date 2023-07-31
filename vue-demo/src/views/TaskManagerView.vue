@@ -33,6 +33,9 @@
                         class=" mx-1 my-1 p-0.5 pr-5 border-black border-b truncate pointer-events-none" disabled>
                     <span class="material-symbols-outlined absolute p-0.5 top-1 right-0.5">expand_more</span>
                 </label>
+                <div v-if="error" class="flex items-center ml-2">
+                    <p class=" text-red-600 text-lg font-bold">{{ errorMessage }}</p>
+                </div>
             </div>
             <div>
                 <button
@@ -57,7 +60,7 @@
                     <tr v-for="activity in this.activities"
                         class="flex justify-around truncate border-b border-slate-500 text-sm" :key="activity.runId">
                         <td class=" w-1/12 truncate px-1 py-1">{{ activity.status }}</td>
-                        <td class=" w-1/6 truncate px-1 py-1">{{ activity.miner?.name }}</td>
+                        <td class=" w-1/6 truncate px-1 py-1">{{ activity.miner?.name || activity.linkMiner?.name }}</td>
                         <td class=" w-1/12 truncate px-1 py-1">{{ activity.username }}</td>
                         <td class=" w-1/6 truncate px-1 py-1">{{ activity.moduleType }}</td>
                         <td class=" w-1/12 max-w-prose truncate px-1 py-1">{{ activity.errorDescription || '' }}</td>
@@ -92,19 +95,24 @@ export default {
     data () {
         return {
             miners: [],
+            statusList: [],
             minersId: [],
             activities: [],
             page: ref(0),
             date: ref(null),
             username: ref(''),
             selectedMiners: [],
-            count: 0,
+            numberPage: 0,
             selectMiner: false,
             buttonText: 'Deselect All',
+            errorMessage: '',
+            error: false,
         }
     },
     async created () {
         try {
+            const status = await MinerDataServices.getStatusList(this.store.token)
+            this.statusList = JSON.parse(JSON.stringify(status.data))
             const response = await MinerDataServices.getMinerList(this.store.token)
             this.miners = JSON.parse(JSON.stringify(response.data))
             this.miners.forEach(miner => {
@@ -121,6 +129,21 @@ export default {
                 const res = await MinerDataServices.getActivities(data, this.store.token)
                 this.activities = JSON.parse(JSON.stringify(res.data.data))
                 this.count = JSON.parse(JSON.stringify(res.data.count))
+                this.numberPage = Math.ceil(this.count / 20)
+                this.activities.forEach(activity => {
+                    if (activity.status == 0) {
+                        activity.status = this.statusList[0].name
+                    } else if (activity.status == 1) {
+                        activity.status = this.statusList[1].name
+                    } else if (activity.status == 2) {
+                        activity.status = this.statusList[2].name
+                    } else if (activity.status == 3) {
+                        activity.status = this.statusList[3].name
+                    } else if (activity.status == 4) {
+                        activity.status = this.statusList[4].name
+                    }
+                })
+                console.log(this.activities)
             }
         } catch (error) {
             console.log(error)
@@ -165,34 +188,73 @@ export default {
                 });
                 const res = await MinerDataServices.getActivities(data, this.store.token)
                 this.activities = JSON.parse(JSON.stringify(res.data.data))
+                this.activities.forEach(activity => {
+                    if (activity.status == 0) {
+                        activity.status = this.statusList[0].name
+                    } else if (activity.status == 1) {
+                        activity.status = this.statusList[1].name
+                    } else if (activity.status == 2) {
+                        activity.status = this.statusList[2].name
+                    } else if (activity.status == 3) {
+                        activity.status = this.statusList[3].name
+                    } else if (activity.status == 4) {
+                        activity.status = this.statusList[4].name
+                    }
+                })
             }
         },
         async goForward () {
-            this.page = this.page + 1
-            let data = JSON.stringify({
-                "page": this.page,
-                "username": this.username,
-                "miners": this.minersId,
-                "date": this.date
-            });
-            const res = await MinerDataServices.getActivities(data, this.store.token)
-            this.activities = JSON.parse(JSON.stringify(res.data.data))
+            if (this.numberPage > this.page + 1) {
+                this.page = this.page + 1
+                let data = JSON.stringify({
+                    "page": this.page,
+                    "username": this.username,
+                    "miners": this.minersId,
+                    "date": this.date
+                });
+                const res = await MinerDataServices.getActivities(data, this.store.token)
+                this.activities = JSON.parse(JSON.stringify(res.data.data))
+                this.activities.forEach(activity => {
+                    if (activity.status == 0) {
+                        activity.status = this.statusList[0].name
+                    } else if (activity.status == 1) {
+                        activity.status = this.statusList[1].name
+                    } else if (activity.status == 2) {
+                        activity.status = this.statusList[2].name
+                    } else if (activity.status == 3) {
+                        activity.status = this.statusList[3].name
+                    } else if (activity.status == 4) {
+                        activity.status = this.statusList[4].name
+                    }
+                })
+            }
         },
         async refresh () {
-            this.minersId = []
-            const selminers = this.miners.filter((m) => this.selectedMiners.includes(m.name))
-            selminers.forEach((e) => {
-                this.minersId.push(e.id)
-            })
-            let data = JSON.stringify({
-                "page": this.page,
-                "username": this.username,
-                "miners": this.minersId,
-                "date": this.date
-            });
-            const res = await MinerDataServices.getActivities(data, this.store.token)
-            this.activities = JSON.parse(JSON.stringify(res.data.data))
-            console.log(this.activities)
+            try {
+                this.minersId = []
+                this.page = 0
+                const selminers = this.miners.filter((m) => this.selectedMiners.includes(m.name))
+                selminers.forEach((e) => {
+                    this.minersId.push(e.id)
+                })
+                let data = JSON.stringify({
+                    "page": this.page,
+                    "username": this.username,
+                    "miners": this.minersId,
+                    "date": this.date
+                });
+                const res = await MinerDataServices.getActivities(data, this.store.token)
+                this.activities = JSON.parse(JSON.stringify(res.data.data))
+                this.count = JSON.parse(JSON.stringify(res.data.count))
+                this.numberPage = Math.ceil(this.count / 20)
+                console.log(this.numberPage)
+                if (this.activities.length == 0) {
+                    this.error = true
+                    this.errorMessage = 'No data was found'
+                }
+            } catch (error) {
+                console.error(error)
+            }
         }
     }
 }
