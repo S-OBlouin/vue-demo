@@ -24,8 +24,8 @@
         </div>
         <div v-if="openError" class="w-full h-full fixed flex justify-center p-0">
             <div class="bg-gray-600/50 z-30 relative h-full w-full"></div>
-            <div class=" bg-white h-fit z-50 mx-auto mt-5 absolute rounded">
-                <div class="flex justify-between bg-slate-100">
+            <div class=" bg-white h-fit z-50 mx-auto mt-5 absolute rounded p-1">
+                <div class="flex justify-between bg-slate-100 px-1 pt-1">
                     <p class=" font-semibold p-2 rounded">Error Message</p>
                     <span class="material-symbols-outlined rounded p-1 flex items-center cursor-pointer"
                         @click="openDialogError">close</span>
@@ -34,7 +34,9 @@
                     <p>{{ activityError }}</p>
                 </div>
                 <div v-if="this.errorId" class="flex flex-col items-center justify-center my-1">
-                    <p v-if="alertMessage" class=" text-green-600 font-semibold transition-all ease-in-out ">{{ alertMessage }}</p>
+                    <Transition>
+                        <p v-if="alertMessage" class=" text-green-600 font-semibold">{{ alertMessage }}</p>
+                    </Transition>
                     <button @click="copyToClipboard" class="px-1 py-0.5 m-1 bg-orange-400 rounded">Copy Error ID</button>
                 </div>
             </div>
@@ -42,8 +44,7 @@
         <header class="flex flex-row justify-between h-fit mt-2 mx-2">
             <div class="flex flex-row">
                 <label>
-                    <input type="text" v-model="username" class=" mx-1 my-1 p-0.5 border-black border-b"
-                        placeholder="User">
+                    <input type="text" v-model="username" class=" mx-1 my-1 p-0.5 border-black border-b" placeholder="User">
                 </label>
                 <label @click="openMiners">
                     <input type="text" v-model="selectedMiners"
@@ -55,9 +56,11 @@
                 </div>
             </div>
             <div>
-                <button class=" bg-white p-1 border-yellow-600 border text-yellow-600 my-1 hover:bg-yellow-600 hover:text-white hover:transition-all hover:delay-50"
+                <button
+                    class=" bg-white p-1 border-yellow-600 border text-yellow-600 my-1 hover:bg-yellow-600 hover:text-white hover:transition-all hover:delay-50"
                     @click="refresh">Search</button>
-                <button class=" bg-white p-1 border-yellow-600 border text-yellow-600 mx-3 my-1 hover:bg-yellow-600 hover:text-white hover:transition-all hover:delay-50"
+                <button
+                    class=" bg-white p-1 border-yellow-600 border text-yellow-600 mx-3 my-1 hover:bg-yellow-600 hover:text-white hover:transition-all hover:delay-50"
                     @click="reset">Reset</button>
             </div>
         </header>
@@ -77,12 +80,15 @@
                 <tbody>
                     <tr v-for="activity in this.activities"
                         class="flex justify-around truncate border-b border-slate-500 text-sm" :key="activity.runId">
-                        <td class=" w-1/12 truncate px-1 py-1 font-semibold" :class="activity.color">{{ activity.status }}</td>
+                        <td class=" w-1/12 truncate px-1 py-1 font-semibold" :class="activity.color">{{ activity.status }}
+                        </td>
                         <td class=" w-1/6 truncate px-1 py-1">{{ activity.miner?.name || activity.linkMiner?.name }}</td>
                         <td class=" w-1/12 truncate px-1 py-1">{{ activity.username }}</td>
                         <td class=" w-1/6 truncate px-1 py-1">{{ activity.moduleType }}</td>
-                        <td v-if="activity.errorDescription" class=" w-1/12 max-w-prose truncate px-1 py-1 cursor-pointer underline hover:text-blue-800" @click="openDialogError($event)" :data-id="activity.runId">{{ activity.errorDescription}}</td>
-                        <td v-else class=" w-1/12 max-w-prose truncate px-1 py-1 select-none" > &nbsp; </td>
+                        <td v-if="activity.errorDescription"
+                            class=" w-1/12 max-w-prose truncate px-1 py-1 cursor-pointer underline hover:text-blue-800"
+                            @click="openDialogError($event)" :data-id="activity.runId">{{ activity.errorDescription }}</td>
+                        <td v-else class=" w-1/12 max-w-prose truncate px-1 py-1 select-none"> &nbsp; </td>
                         <td class=" w-1/6 truncate px-1 py-1">{{ formatDateTime(activity.startDate) }}</td>
                         <td class=" w-1/6 truncate px-1 py-1">{{ formatDateTime(activity.endDate) }}</td>
                     </tr>
@@ -90,11 +96,13 @@
             </table>
             <div class="flex flex-row-reverse text-sm mt-2">
                 <div class="flex">
-                    <p class="flex items-center">Page {{this.page + 1 }} of {{ this.numberPage }}</p> 
+                    <p class="flex items-center">Page {{ this.page + 1 }} of {{ this.numberPage }}</p>
                     <div class=" flex">
                         <span class="material-symbols-outlined text-lg font-bold cursor-pointer"
-                        @click="goBack">chevron_left</span>
-                        <span v-if="page + 1 < numberPage" class="material-symbols-outlined text-lg font-bold cursor-pointer" @click="goForward">chevron_right</span>
+                            @click="goBack">chevron_left</span>
+                        <span v-if="page + 1 < numberPage"
+                            class="material-symbols-outlined text-lg font-bold cursor-pointer"
+                            @click="goForward">chevron_right</span>
                     </div>
                 </div>
                 <div class=" mr-5 mt-1">
@@ -104,6 +112,18 @@
         </section>
     </main>
 </template>
+
+<style>
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+</style>
 
 <script>
 import MinerDataServices from '@/services/MinerDataServices.js'
@@ -292,23 +312,23 @@ export default {
                 this.count = JSON.parse(JSON.stringify(res.data.count))
                 this.numberPage = Math.ceil(this.count / 20)
                 this.activities.forEach(activity => {
-                        if (activity.status == 0) {
-                            activity.status = this.statusList[0].name
-                            activity.color = 'text-yellow-600'
-                        } else if (activity.status == 1) {
-                            activity.status = this.statusList[1].name
-                            activity.color = 'text-green-600'
-                        } else if (activity.status == 2) {
-                            activity.status = this.statusList[2].name
-                            activity.color = 'text-green-600'
-                        } else if (activity.status == 3) {
-                            activity.status = this.statusList[3].name
-                            activity.color = 'text-red-600'
-                        } else if (activity.status == 4) {
-                            activity.status = this.statusList[4].name
-                            activity.color = 'text-red-600'
-                        }
-                    })
+                    if (activity.status == 0) {
+                        activity.status = this.statusList[0].name
+                        activity.color = 'text-yellow-600'
+                    } else if (activity.status == 1) {
+                        activity.status = this.statusList[1].name
+                        activity.color = 'text-green-600'
+                    } else if (activity.status == 2) {
+                        activity.status = this.statusList[2].name
+                        activity.color = 'text-green-600'
+                    } else if (activity.status == 3) {
+                        activity.status = this.statusList[3].name
+                        activity.color = 'text-red-600'
+                    } else if (activity.status == 4) {
+                        activity.status = this.statusList[4].name
+                        activity.color = 'text-red-600'
+                    }
+                })
                 if (this.activities.length == 0) {
                     this.error = true
                     this.errorMessage = 'No data was found'
@@ -317,7 +337,7 @@ export default {
                 console.error(error)
             }
         },
-        async reset() {
+        async reset () {
             try {
                 this.username = ''
                 this.page = 0
@@ -361,7 +381,7 @@ export default {
                 console.log(error)
             }
         },
-        openDialogError(event){
+        openDialogError (event) {
             const id = event.originalTarget.dataset.id
             if (this.activityError.length == 0) {
                 const e = this.activities.find(a => a.runId == id)
@@ -372,11 +392,11 @@ export default {
             }
             this.openError = !this.openError
         },
-        async copyToClipboard(){
+        async copyToClipboard () {
             if (this.errorId) {
                 await navigator.clipboard.writeText(this.errorId)
                 this.alertMessage = 'Copied to Clipboard'
-                setTimeout(()=>{
+                setTimeout(() => {
                     this.alertMessage = ''
                 }, 3000)
             }
