@@ -1,5 +1,5 @@
 <template>
-    <main class="h-screen flex flex-grow flex-col">
+    <main class="flex flex-grow flex-col">
         <div v-if="selectMiner" class="w-full h-full fixed flex justify-center p-0 justify-items-center">
             <div class="bg-gray-600/50 z-30 relative flex justify-center flex-grow">
                 <div class=" bg-white h-fit w-60 z-50 top-5 right-1/2 absolute rounded">
@@ -24,7 +24,7 @@
         </div>
         <div v-if="openError" class="w-full h-full fixed flex justify-center p-0">
             <div class="bg-gray-600/50 z-30 relative h-full w-full"></div>
-            <div class=" bg-white h-fit z-50 mx-auto mt-5 absolute rounded p-1">
+            <div class=" bg-white h-fit z-50 mx-auto mt-5 rounded p-1">
                 <div class="flex justify-between bg-slate-100 px-1 pt-1">
                     <p class=" font-semibold p-2 rounded">Error Message</p>
                     <span class="material-symbols-outlined rounded p-1 flex items-center cursor-pointer"

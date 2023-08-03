@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col h-screen flex-grow">
+    <div class="flex flex-col flex-grow">
         <!-- <HeaderComponent /> -->
 
         <div class=" flex flex-col items-center justify-center flex-grow">
@@ -20,7 +20,7 @@ import { useUserStore } from '@/stores/UserStore';
 import { ref } from 'vue';
 
 export default {
-    components: {HeaderComponent},
+    components: { HeaderComponent },
     name: "HomeView",
     setup () {
         const userStore = useUserStore()

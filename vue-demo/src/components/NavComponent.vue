@@ -1,5 +1,5 @@
 <template>
-    <nav class="flex flex-col bg-yellow-500 px-2 pt-2 transition-all delay-100 " :class="isOpen ? 'w-56 ' : 'w-32'">
+    <nav class="flex flex-col bg-yellow-500 px-2 pt-2 transition-all delay-100" :class="isOpen ? 'w-56 ' : 'w-32'">
         <div class="flex justify-center items-center">
             <router-link to="/" @click="this.userStore.pageName = 'Home'"><img src="@/assets/img/icon.png" alt="Home Icon"
                     class=" h-14 ml-2" /></router-link>

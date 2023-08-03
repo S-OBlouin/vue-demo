@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row h-screen flex-grow">
+    <div class="flex flex-row flex-grow">
         <div v-if="crmOpen" class="  w-full h-full fixed flex justify-center p-0 justify-items-center">
             <div class="bg-gray-600/50 z-30 relative flex justify-center flex-grow">
                 <div class=" bg-white h-fit w-60 z-50 top-5 absolute rounded">
@@ -33,7 +33,8 @@
                 </div>
             </div>
             <div class="flex items-center justify-center ">
-                <button @click="showFeatures(); showSettings();" class="px-1 py-0.5 m-1 bg-orange-400 rounded">Select</button>
+                <button @click="showFeatures(); showSettings();"
+                    class="px-1 py-0.5 m-1 bg-orange-400 rounded">Select</button>
             </div>
         </div>
         <div v-if="this.showFeature">
@@ -44,16 +45,16 @@
                         <label class="flex justify-between">
                             <span class="ml-1 overflow-x-hidden">{{ status }}</span>
                         </label>
-                        <div v-if="status =='2'">
+                        <div v-if="status == '2'">
                             <label class="mr-2">
                                 <span>SAR</span>
-                                <input type="radio" :name="status" :checked="checkedSAR.SAR2"
-                                    :v-model="selectedStatus" :value="1">
+                                <input type="radio" :name="status" :checked="checkedSAR.SAR2" :v-model="selectedStatus"
+                                    :value="1">
                             </label>
                             <label class="mr-2">
                                 <span>Clear</span>
-                                <input type="radio" :name="status" :checked="checkedClear.Clear2"
-                                    :v-model="selectedStatus" :value="2">
+                                <input type="radio" :name="status" :checked="checkedClear.Clear2" :v-model="selectedStatus"
+                                    :value="2">
                             </label>
                             <label class="mr-2">
                                 <span>Unknown</span>
@@ -61,16 +62,16 @@
                                     :v-model="selectedStatus" :value="3">
                             </label>
                         </div>
-                        <div v-if="status =='4'">
+                        <div v-if="status == '4'">
                             <label class="mr-2">
                                 <span>SAR</span>
-                                <input type="radio" :name="status" :checked="checkedSAR.SAR4"
-                                    :v-model="selectedStatus" :value="1">
+                                <input type="radio" :name="status" :checked="checkedSAR.SAR4" :v-model="selectedStatus"
+                                    :value="1">
                             </label>
                             <label class="mr-2">
                                 <span>Clear</span>
-                                <input type="radio" :name="status" :checked="checkedClear.Clear4"
-                                    :v-model="selectedStatus" :value="2">
+                                <input type="radio" :name="status" :checked="checkedClear.Clear4" :v-model="selectedStatus"
+                                    :value="2">
                             </label>
                             <label class="mr-2">
                                 <span>Unknown</span>
@@ -78,16 +79,16 @@
                                     :v-model="selectedStatus" :value="3">
                             </label>
                         </div>
-                        <div v-if="status =='6'">
+                        <div v-if="status == '6'">
                             <label class="mr-2">
                                 <span>SAR</span>
-                                <input type="radio" :name="status" :checked="checkedSAR.SAR6"
-                                    :v-model="selectedStatus" :value="1">
+                                <input type="radio" :name="status" :checked="checkedSAR.SAR6" :v-model="selectedStatus"
+                                    :value="1">
                             </label>
                             <label class="mr-2">
                                 <span>Clear</span>
-                                <input type="radio" :name="status" :checked="checkedClear.Clear6"
-                                    :v-model="selectedStatus" :value="2">
+                                <input type="radio" :name="status" :checked="checkedClear.Clear6" :v-model="selectedStatus"
+                                    :value="2">
                             </label>
                             <label class="mr-2">
                                 <span>Unknown</span>
@@ -95,16 +96,16 @@
                                     :v-model="selectedStatus" :value="3">
                             </label>
                         </div>
-                        <div v-if="status =='9'">
+                        <div v-if="status == '9'">
                             <label class="mr-2">
                                 <span>SAR</span>
-                                <input type="radio" :name="status" :checked="checkedSAR.SAR9"
-                                    :v-model="selectedStatus" :value="1">
+                                <input type="radio" :name="status" :checked="checkedSAR.SAR9" :v-model="selectedStatus"
+                                    :value="1">
                             </label>
                             <label class="mr-2">
                                 <span>Clear</span>
-                                <input type="radio" :name="status" :checked="checkedClear.Clear9"
-                                    :v-model="selectedStatus" :value="2">
+                                <input type="radio" :name="status" :checked="checkedClear.Clear9" :v-model="selectedStatus"
+                                    :value="2">
                             </label>
                             <label class="mr-2">
                                 <span>Unknown</span>
@@ -112,11 +113,11 @@
                                     :v-model="selectedStatus" :value="3">
                             </label>
                         </div>
-                        <div v-if="status =='RED'">
+                        <div v-if="status == 'RED'">
                             <label class="mr-2">
                                 <span>SAR</span>
-                                <input type="radio" :name="status" :checked="checkedSAR.SARRED"
-                                    :v-model="selectedStatus" :value="1">
+                                <input type="radio" :name="status" :checked="checkedSAR.SARRED" :v-model="selectedStatus"
+                                    :value="1">
                             </label>
                             <label class="mr-2">
                                 <span>Clear</span>
@@ -129,7 +130,7 @@
                                     :v-model="selectedStatus" :value="3">
                             </label>
                         </div>
-                        <div v-if="status =='TAMAMLANDI'">
+                        <div v-if="status == 'TAMAMLANDI'">
                             <label class="mr-2">
                                 <span>SAR</span>
                                 <input type="radio" :name="status" :checked="checkedSAR.SARTAMAMLANDI"
@@ -259,7 +260,7 @@ export default {
             });
             this.showFeature = true
         },
-        async showSettings(){
+        async showSettings () {
             this.checkedSAR = [{
                 SAR2: false,
                 SAR4: false,
@@ -268,22 +269,22 @@ export default {
                 SARRED: false,
                 SARTAMAMLANDI: false,
             }],
-            this.checkedClear = {
-                Clear2: false,
-                Clear4: false,
-                Clear6: false,
-                Clear9: false,
-                ClearRED: false,
-                ClearTAMAMLANDI: false,
-            },
-            this.checkedUnknown = {
-                Unknown2: false,
-                Unknown4: false,
-                Unknown6: false,
-                Unknown9: false,
-                UnknownRED: false,
-                UnknownTAMAMLANDI: false,
-            }
+                this.checkedClear = {
+                    Clear2: false,
+                    Clear4: false,
+                    Clear6: false,
+                    Clear9: false,
+                    ClearRED: false,
+                    ClearTAMAMLANDI: false,
+                },
+                this.checkedUnknown = {
+                    Unknown2: false,
+                    Unknown4: false,
+                    Unknown6: false,
+                    Unknown9: false,
+                    UnknownRED: false,
+                    UnknownTAMAMLANDI: false,
+                }
             const res = await MinerDataServices.getStatuses(this.store.token)
             this.statuses = JSON.parse(JSON.stringify(res.data))
             const status = this.selectedMiner.statuses.split(',')
