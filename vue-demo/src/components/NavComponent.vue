@@ -300,7 +300,7 @@
                 </div>
                 <div v-if="button.number === 28" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link :to="button.link"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
@@ -382,7 +382,7 @@ export default {
                     } else if (button == 13) {
                         this.buttonVisibility.push({ number: 27, name: 'NRT Reports', link: 'nrtReports' })
                     } else if (button == 20) {
-                        this.buttonVisibility.push({ number: 28, name: 'Backlog Result Report', link: 'backlogResultReport' })
+                        this.buttonVisibility.push({ number: 28, name: 'Backlog Result Report', link: '/report/backlog-report' })
                     }
                 });
                 this.buttonVisibility = this.buttonVisibility.sort((b1, b2) => (b1.number > b2.number) ? 1 : (b1.number < b2.number) ? -1 : 0)

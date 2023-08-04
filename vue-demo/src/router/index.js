@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import TaskManagerView from '@/views/TaskManagerView.vue'
 import SuspectMinerTraining from '@/views/SuspectMinerTrainingView.vue'
+import BacklogReportView from '@/views/BacklogReportView.vue'
 import { useUserStore } from '@/stores/UserStore';
 
 
@@ -29,6 +30,11 @@ const router = createRouter({
       path: '/task-manager',
       name: 'taskManager',
       component: TaskManagerView
+    },
+    {
+      path: '/report/backlog-report',
+      name: 'backlogReport',
+      component: BacklogReportView
     },
   ]
 })
