@@ -3,7 +3,7 @@
     <NavComponent v-if="isLogin" class=" z-10 min-h-screen" />
     <div class="flex flex-grow flex-col">
       <HeaderComponent v-if="isLogin" />
-      <RouterView class="bg-gray-300" />
+      <RouterView class="bg-gray-300"/>
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   components: { RouterView, NavComponent, HeaderComponent },
   data () {
     return {
-      routeName: null
+      routeName: "",
     }
   },
 

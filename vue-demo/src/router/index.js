@@ -35,6 +35,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) =>{
   const userStore = useUserStore()
+  if(document.body.classList.contains('overflow-hidden')){
+    document.body.classList.remove('overflow-hidden')
+  }
 
   if(!userStore.token && to.name !== 'login'){
     userStore.$reset()

@@ -1,7 +1,7 @@
 <template>
     <main class="flex flex-grow flex-col">
-        <div v-if="selectMiner" class="w-full h-full fixed flex justify-center p-0 justify-items-center">
-            <div class="bg-gray-600/50 z-30 relative flex justify-center flex-grow">
+        <div v-if="selectMiner" class="w-full h-full fixed flex min-h-screen justify-center p-0 justify-items-center">
+            <div class="bg-gray-600/50 z-30 flex justify-center flex-grow">
                 <div class=" bg-white h-fit w-60 z-50 top-5 right-1/2 absolute rounded">
                     <div class="flex justify-between bg-slate-100">
                         <p class=" font-semibold p-2 rounded">Select Miners</p>
@@ -23,8 +23,8 @@
             </div>
         </div>
         <div v-if="openError" class="w-full h-full fixed flex justify-center p-0">
-            <div class="bg-gray-600/50 z-30 relative h-full w-full"></div>
-            <div class=" bg-white h-fit z-50 mx-auto mt-5 rounded p-1">
+            <div class="bg-gray-600/50 z-30 fixed h-full w-full"></div>
+            <div class=" bg-white h-fit z-50 absolute mx-auto mt-5 rounded p-1">
                 <div class="flex justify-between bg-slate-100 px-1 pt-1">
                     <p class=" font-semibold p-2 rounded">Error Message</p>
                     <span class="material-symbols-outlined rounded p-1 flex items-center cursor-pointer"
@@ -46,10 +46,10 @@
                 <label>
                     <input type="text" v-model="username" class=" mx-1 my-1 p-0.5 border-black border-b" placeholder="User">
                 </label>
-                <label @click="openMiners">
+                <label @click="openMiners" :class="selectMiner || openError ? '' : 'relative'">
                     <input type="text" v-model="selectedMiners"
-                        class=" mx-1 my-1 p-0.5 pr-5 border-black border-b truncate pointer-events-none" disabled>
-                    <span class="material-symbols-outlined absolute p-0.5 top-1 right-0.5">expand_more</span>
+                        class=" mx-1 my-1 p-0.5 pr-8 border-black border-b truncate pointer-events-none" disabled>
+                    <span v-if="!selectMiner && !openError" class="material-symbols-outlined absolute my-2 right-1.5">expand_more</span>
                 </label>
                 <div v-if="error" class="flex items-center ml-2">
                     <p class=" text-red-600 text-lg font-bold">{{ errorMessage }}</p>
@@ -205,6 +205,11 @@ export default {
     },
     methods: {
         openMiners () {
+            if(document.body.classList.contains('overflow-hidden')){
+                document.body.classList.remove('overflow-hidden')
+            }else{
+                document.body.classList.add('overflow-hidden')
+            }
             this.selectMiner = !this.selectMiner
         },
         formatDateTime (isoDate) {
@@ -382,6 +387,11 @@ export default {
             }
         },
         openDialogError (event) {
+            if(document.body.classList.contains('overflow-hidden')){
+                document.body.classList.remove('overflow-hidden')
+            }else{
+                document.body.classList.add('overflow-hidden')
+            }
             const id = event.originalTarget.dataset.id
             if (this.activityError.length == 0) {
                 const e = this.activities.find(a => a.runId == id)
