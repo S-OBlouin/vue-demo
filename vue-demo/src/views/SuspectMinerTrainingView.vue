@@ -242,14 +242,12 @@ export default {
             const res = await MinerDataServices.getMiners(this.store.token)
             this.miners = JSON.parse(JSON.stringify(res.data))
             this.miners = this.miners.filter(miner => miner.statuses !== null && miner.name != 'Sanction Matcher')
-            console.log(this.miners)
         } catch (error) {
             console.error(error)
         }
     },
     methods: {
         async showFeatures () {
-            //reminder for meeting tomorrow 18th
             this.crmfeature = []
             const feature = this.selectedMiner.crmFeatures.split(',')
             feature.forEach(element => {

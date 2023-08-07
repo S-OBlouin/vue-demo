@@ -13,7 +13,6 @@
 
 <script>
 import { useUserStore } from '@/stores/UserStore'
-import APIDataServices from '@/services/APIDataServices.js'
 export default {
     setup () {
         const userStore = useUserStore()
@@ -23,13 +22,6 @@ export default {
     name: "HeaderComponent",
     methods: {
         async logOff () {
-            // const res =  await APIDataServices.logoff({
-            //     username: this.userStore.username,
-            //     password: this.userStore.password,
-            //     companyName: this.userStore.companyName,
-            //     companyId: this.userStore.companyId,
-            //     allsessionclose: false
-            // })
             this.userStore.$reset()
             this.$router.push({ name: 'login' })
         }

@@ -14,7 +14,7 @@
                 <span @mouseenter="hoverName(button)" @mouseleave="closeHover"
                     class="material-symbols-outlined justify-center items-center mr-1"
                     :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">group</span>
-                <router-link to="#"
+                <router-link to="#" @click="this.userStore.pageName = button.name"
                     :class="isOpen ? '' : ' hidden rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">{{
                         button.name }}</router-link>
                 <p
@@ -42,21 +42,21 @@
             <div v-if="subMenuOpen && activeButton.number == 2">
                 <div v-if="button.number === 3" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
                 </div>
                 <div v-if="button.number === 4" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
                 </div>
                 <div v-if="button.number === 5" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
@@ -89,21 +89,21 @@
                 </div>
                 <div v-if="button.number === 8" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
                 </div>
                 <div v-if="button.number === 9" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
                 </div>
                 <div v-if="button.number === 10" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
@@ -128,7 +128,7 @@
             <div v-if="subMenuOpen && activeButton.number == 11">
                 <div v-if="button.number === 12" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
@@ -138,8 +138,9 @@
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
                 <span @mouseenter="hoverName(button)" @mouseleave="closeHover" class="material-symbols-outlined mr-1"
                     :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">task</span>
-                <router-link :to="button.link" :class="isOpen ? '' : ' hidden truncate'">{{
-                    button.name }}</router-link>
+                <router-link :to="button.link" @click="this.userStore.pageName = button.name"
+                    :class="isOpen ? '' : ' hidden truncate'">{{
+                        button.name }}</router-link>
                 <p
                     :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
                     {{
@@ -150,8 +151,9 @@
                 :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
                 <span @mouseenter="hoverName(button)" @mouseleave="closeHover" class="material-symbols-outlined mr-1"
                     :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">book</span>
-                <router-link to="#" :class="isOpen ? '' : 'hidden truncate'">{{
-                    button.name }}</router-link>
+                <router-link to="#" @click="this.userStore.pageName = button.name"
+                    :class="isOpen ? '' : 'hidden truncate'">{{
+                        button.name }}</router-link>
                 <p
                     :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
                     {{
@@ -177,35 +179,35 @@
             <div v-if="subMenuOpen && activeButton.number == 15">
                 <div v-if="button.number === 16" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
                 </div>
                 <div v-if="button.number === 17" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
                 </div>
                 <div v-if="button.number === 18" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
                 </div>
                 <div v-if="button.number === 19" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
                 </div>
                 <div v-if="button.number === 20" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
@@ -247,7 +249,7 @@
             <div v-if="subMenuOpen && activeButton.number == 22">
                 <div v-if="button.number === 23" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
@@ -258,8 +260,9 @@
                 <div class="flex justify-center items-center">
                     <span class="material-symbols-outlined mr-1" @mouseenter="hoverName(button)" @mouseleave="closeHover"
                         :class="isOpen ? '' : 'hover:bg-yellow-700 hover:text-white hover:rounded hover:px-2 transition-all delay-100'">folder_managed</span>
-                    <router-link to="#" :class="isOpen ? '' : ' hidden truncate'">{{
-                        button.name }}</router-link>
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
+                        :class="isOpen ? '' : ' hidden truncate'">{{
+                            button.name }}</router-link>
                     <p
                         :class="isHover && activeButton == button ? ' absolute z-10 visible bg-yellow-300 shadow-lg left-[132px] rounded py-1 px-1' : 'hidden'">
                         {{
@@ -286,21 +289,21 @@
             <div v-if="subMenuOpen && activeButton.number == 25">
                 <div v-if="button.number === 26" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
                 </div>
                 <div v-if="button.number === 27" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link to="#"
+                    <router-link to="#" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
                 </div>
                 <div v-if="button.number === 28" class="px-4 py-3 mt-4"
                     :class="isOpen ? 'rounded hover:bg-yellow-700 transition-all delay-100' : 'flex justify-center items-center transition-all delay-100'">
-                    <router-link :to="button.link"
+                    <router-link :to="button.link" @click="this.userStore.pageName = button.name"
                         :class="isOpen ? '' : 'rounded-full bg-yellow-700 text-transparent hover:text-white hover:rounded hover:px-2 transition-all delay-100 truncate'">
                         {{ button.name }}
                     </router-link>
