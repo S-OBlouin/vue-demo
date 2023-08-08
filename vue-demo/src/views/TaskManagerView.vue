@@ -197,7 +197,6 @@ export default {
                         activity.color = 'text-red-600'
                     }
                 })
-                console.log(this.activities)
             }
         } catch (error) {
             console.log(error)
