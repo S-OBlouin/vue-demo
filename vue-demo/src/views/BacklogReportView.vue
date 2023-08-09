@@ -96,7 +96,8 @@
             </div>
         </div>
         <section v-if="this.reports.length > 0" class="m-1 mt-3 px-5 flex flex-col">
-            <div class="text-center text-sm">
+
+            <!-- <div class="text-center text-sm">
                 <div class=" grid grid-cols-11 mb-2 justify-center gap-2 font-semibold border-b border-slate-500">
                     <div class="flex justify-center group"><p>Created At</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
                     <div class="flex justify-center group"><p>Miner Name</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
@@ -138,7 +139,7 @@
                 <div class=" mr-5 mt-1">
                     <p>{{ count }} Item(s)</p>
                 </div>
-            </div>
+            </div> -->
         </section>
     </main>
 </template>
