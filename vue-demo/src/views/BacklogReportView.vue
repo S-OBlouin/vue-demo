@@ -97,7 +97,7 @@
         </div>
         <section v-if="this.reports.length > 0" class="m-1 mt-3 px-5 flex flex-col">
             <div class="text-center text-sm">
-                <div class=" grid grid-cols-11 gap-8 mb-2 justify-center font-semibold border-b border-slate-500">
+                <div class=" grid grid-cols-11 mb-2 justify-center gap-2 font-semibold border-b border-slate-500">
                     <div class="flex justify-center group"><p>Created At</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
                     <div class="flex justify-center group"><p>Miner Name</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
                     <div class="flex justify-center group"><p>Display ID</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
@@ -110,7 +110,7 @@
                     <div class="flex justify-center group"><p>Type 2</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
                     <div><p>Filter</p></div>
                 </div>
-                <div v-for="report in this.reports" class=" grid grid-cols-11 gap-8 border-b border-slate-500">
+                <div v-for="report in this.reports" class=" grid grid-cols-11 gap-2 border-b border-slate-500">
                     <div>{{ formatDateTime(report.createdAt) }}</div>
                     <div>{{ report.minerName }}</div>
                     <div>{{ report.displayId }}</div>
