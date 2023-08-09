@@ -22,6 +22,25 @@
                 </div>
             </div>
         </div>
+        <div v-if="openFilter" class="w-full h-full fixed flex justify-center p-0">
+            <div class="bg-gray-600/50 z-30 fixed h-full w-full"></div>
+            <div class=" bg-white h-fit z-50 absolute mx-auto mt-5 rounded p-1">
+                <div class="flex justify-between bg-slate-100 px-1 pt-1">
+                    <p class=" font-semibold p-2 rounded">Filters</p>
+                    <span class="material-symbols-outlined rounded p-1 flex items-center cursor-pointer"
+                        @click="openDialogFilter">close</span>
+                </div>
+                <div class=" max-h-96 max-w-prose overflow-auto p-2 overflow-y-auto">
+                    <p class=" break-words">{{ filter }}</p>
+                </div>
+                <div v-if="this.errorId" class="flex flex-col items-center justify-center my-1">
+                    <Transition>
+                        <p v-if="alertMessage" class=" text-green-600 font-semibold">{{ alertMessage }}</p>
+                    </Transition>
+                    <button @click="copyToClipboard" class="px-1 py-0.5 m-1 bg-orange-400 rounded">Copy Error ID</button>
+                </div>
+            </div>
+        </div>
         <div class="mx-2 mt-2 flex border-b border-gray-500 h-fit justify-between">
             <div class="flex">
                 <div class="my-4 mx-3 flex flex-col">
@@ -59,8 +78,8 @@
             </div>
             <div class="my-4 mx-3 flex flex-col">
                 <p>&nbsp;</p>
-                <label class="mb-2" :class="selectMiner ? '' : 'relative'" @click="openMiners">
-                    <input type="text" placeholder="Miner Name" class="w-48 bg-gray-300 border-b border-black rounded-t focus:bg-white focus:transition-colors focus:ease-in focus:outline-none focus:ring-0 placeholder:text-gray-800 truncate pr-8" v-model="minersName" disabled ><span v-if="!selectMiner" class="material-symbols-outlined absolute right-0.5">expand_more</span>
+                <label class="mb-2" :class="selectMiner || openFilter ? '' : 'relative'" @click="openMiners">
+                    <input type="text" placeholder="Miner Name" class="w-48 bg-gray-300 border-b border-black rounded-t focus:bg-white focus:transition-colors focus:ease-in focus:outline-none focus:ring-0 placeholder:text-gray-800 truncate pr-8" v-model="minersName" disabled ><span v-if="!selectMiner && !openFilter" class="material-symbols-outlined absolute right-0.5">expand_more</span>
                 </label>
                 <p>&nbsp;</p>
                 <label>
@@ -73,41 +92,53 @@
             </div>
             <div class="my-4 mx-3 flex flex-col">
                 <button class=" text-lg bg-white p-1 border-yellow-600 border text-yellow-600 my-1 hover:bg-yellow-600 hover:text-white hover:transition-all hover:delay-50" @click="getReports">Search</button>
+                <button class=" text-lg bg-white p-1 border-yellow-600 border text-yellow-600 mx-3 my-1 hover:bg-yellow-600 hover:text-white hover:transition-all hover:delay-50" @click="reset">Reset</button>
             </div>
         </div>
         <section v-if="this.reports.length > 0" class="m-1 mt-3 px-5 flex flex-col">
-            <table class="table">
-                <thead>
-                    <tr class="flex justify-between border-b border-slate-500 text-sm">
-                        <th class=" w-1/12 text-sm mx-1">Created At</th>
-                        <th class=" w-1/12 text-sm mx-1">Miner Name</th>
-                        <th class=" w-1/12 text-sm mx-1">Display ID</th>
-                        <th class=" w-[5%] text-sm mx-1">Alert ID</th>
-                        <th class=" w-1/12 text-sm mx-1">Customer ID</th>
-                        <th class=" w-1/12 text-sm mx-1">Customer Name</th>
-                        <th class=" w-[5%] text-sm mx-1">Label</th>
-                        <th class=" w-1/12 text-sm mx-1">SAR Probability</th>
-                        <th class=" w-1/12 text-sm mx-1">Type 1</th>
-                        <th class=" w-1/12 text-sm mx-1">Type 2</th>
-                        <th class=" w-[5%] text-sm mx-1">Filter</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="report in this.reports" class="flex justify-between truncate border-b border-slate-500 text-sm" :key="report.runId">
-                        <td class=" w-1/12 text-sm mx-1">{{ formatDateTime(report.createdAt) }}</td>
-                        <td class=" w-1/12 text-sm mx-1">{{ report.minerName }}</td>
-                        <td class=" w-1/12 text-sm mx-1">{{ report.displayId }}</td>
-                        <td class=" w-[5%] text-sm mx-1 truncate">{{ report.alertId }}</td>
-                        <td class=" w-1/12 text-sm mx-1">{{ report.customerId }}</td>
-                        <td class=" w-1/12 text-sm mx-1">{{ report.customerName }}</td>
-                        <td class=" w-[5%] text-sm mx-1 truncate">{{ report.label }}</td>
-                        <td class=" w-1/12 text-sm truncate mx-1">{{ report.probabilityOfSar }}</td>
-                        <td class=" w-1/12 text-sm mx-1">{{ report.type1 }}</td>
-                        <td class=" w-1/12 text-sm mx-1">{{ report.type2 }}</td>
-                        <td class=" w-[5%]text-sm mx-1"><button><button class=" bg-white p-1 border-yellow-600 border text-yellow-600 my-1 hover:bg-yellow-600 hover:text-white hover:transition-all hover:delay-50" @click="getReports">Filter</button></button></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="text-center text-sm">
+                <div class=" grid grid-cols-11 gap-8 mb-2 justify-center font-semibold border-b border-slate-500">
+                    <div class="flex justify-center group"><p>Created At</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
+                    <div class="flex justify-center group"><p>Miner Name</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
+                    <div class="flex justify-center group"><p>Display ID</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
+                    <div class="flex justify-center group"><p>Alert ID</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
+                    <div class="flex justify-center group"><p>Customer ID</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
+                    <div class="flex justify-center group"><p>Customer Name</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
+                    <div class="flex justify-center group"><p>Label</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
+                    <div class="flex justify-center group"><p>SAR Probability</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
+                    <div class="flex justify-center group"><p>Type 1</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
+                    <div class="flex justify-center group"><p>Type 2</p><span class="material-symbols-outlined invisible group-hover:visible">expand_more</span></div>
+                    <div><p>Filter</p></div>
+                </div>
+                <div v-for="report in this.reports" class=" grid grid-cols-11 gap-8 border-b border-slate-500">
+                    <div>{{ formatDateTime(report.createdAt) }}</div>
+                    <div>{{ report.minerName }}</div>
+                    <div>{{ report.displayId }}</div>
+                    <div>{{ report.alertId }}</div>
+                    <div>{{ report.customerId }}</div>
+                    <div>{{ report.customerName }}</div>
+                    <div>{{ report.label }}</div>
+                    <div class="truncate">{{ report.probabilityOfSar }}</div>
+                    <div>{{ report.type1 }}</div>
+                    <div>{{ report.type2 }}</div>
+                    <div><button class=" bg-white p-1 border-yellow-600 border text-yellow-600 my-1 hover:bg-yellow-600 hover:text-white hover:transition-all hover:delay-50" @click="openDialogFilter($event)" :data-filter=" report.filters">Show Filter</button></div>
+                </div>
+            </div>
+            <div class="flex flex-row-reverse text-sm mt-2">
+                <div class="flex">
+                    <p class="flex items-center">Page {{ this.page + 1 }} of {{ this.numberPage }}</p>
+                    <div class=" flex">
+                        <span class="material-symbols-outlined text-lg font-bold cursor-pointer"
+                            @click="goBack">chevron_left</span>
+                        <span v-if="page + 1 < numberPage"
+                            class="material-symbols-outlined text-lg font-bold cursor-pointer"
+                            @click="goForward">chevron_right</span>
+                    </div>
+                </div>
+                <div class=" mr-5 mt-1">
+                    <p>{{ count }} Item(s)</p>
+                </div>
+            </div>
         </section>
     </main>
 </template>
@@ -140,6 +171,9 @@ export default {
             buttonText: 'Select',
             count: ref(0),
             numberPage: ref(0),
+            page: ref(0),
+            openFilter: false,
+            filter:ref(''),
         }
     },
     created(){
@@ -163,7 +197,7 @@ export default {
             console.error(error)
         }
     }, 
-    methods: {
+    methods: { 
         openMiners () {
             if(document.body.classList.contains('overflow-hidden')){
                 document.body.classList.remove('overflow-hidden')
@@ -194,11 +228,9 @@ export default {
                 this.reports = JSON.parse(JSON.stringify(res.data.item1))
                 this.count = JSON.parse(JSON.stringify(res.data.item2))
                 this.numberPage = Math.ceil(this.count / 10)
-
                 if(this.minersName == null){
                     this.minersName = []
                 }
-                console.log(this.reports)
             } catch (error) {
                 console.error(error)
             }
@@ -215,6 +247,100 @@ export default {
             } else {
                 return ''
             }
+        },
+        async goBack () {
+            try {
+                if(this.minersName.length == 0){
+                    this.minersName = null
+                }
+                if (this.page > 0) {
+                    this.page = this.page - 1
+                    let data = JSON.stringify({
+                    "displayId": this.displayId,
+                    "endDate": this.dateEnd,
+                    "endTime": this.timeEnd,
+                    "excelMultiple": 0,
+                    "label": this.label,
+                    "minerNames": this.minersName,
+                    "page": this.page,
+                    "probabilityOfSarMax": this.sarMax || null,
+                    "probabilityOfSarMin": this.sarMin || null,
+                    "startDate": this.dateStart,
+                    "startTime": this.timeStart
+                    })
+                    const res = await BacklogReportDataServices.getBacklogResult(data, this.store.token)
+                    this.reports = JSON.parse(JSON.stringify(res.data.item1))
+                }
+                if(this.minersName == null){
+                    this.minersName = []
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        async goForward () {
+            try {
+                if(this.minersName.length == 0){
+                    this.minersName = null
+                }
+                if (this.numberPage > this.page + 1) {
+                this.page = this.page + 1
+                let data = JSON.stringify({
+                    "displayId": this.displayId,
+                    "endDate": this.dateEnd,
+                    "endTime": this.timeEnd,
+                    "excelMultiple": 0,
+                    "label": this.label,
+                    "minerNames": this.minersName,
+                    "page": this.page,
+                    "probabilityOfSarMax": this.sarMax || null,
+                    "probabilityOfSarMin": this.sarMin || null,
+                    "startDate": this.dateStart,
+                    "startTime": this.timeStart
+                    })
+                    const res = await BacklogReportDataServices.getBacklogResult(data, this.store.token)
+                    this.reports = JSON.parse(JSON.stringify(res.data.item1))
+                }
+                if(this.minersName == null){
+                    this.minersName = []
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        openDialogFilter(event){
+            if(document.body.classList.contains('overflow-hidden')){
+                document.body.classList.remove('overflow-hidden')
+            }else{
+                document.body.classList.add('overflow-hidden')
+            }
+            if(this.filter.length == 0){
+                this.filter = event.originalTarget.dataset.filter
+            } else {
+                this.filter = ''
+            }
+            this.openFilter = !this.openFilter
+        },
+        reset(){
+            this.reports = []
+            this.timeStart = '00:00'
+            this.timeEnd = '23:59'
+            this.sarMax = ''
+            this.sarMin = ''
+            this.minersName = []
+            this.displayId = ''
+            this.label = ''
+            const currentDate = new Date()
+            let year = currentDate.getFullYear()
+            let month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
+            let day = currentDate.getDate().toString().padStart(2, '0')
+            this.dateEnd = `${year}-${month}-${day}`
+            const yesterdayDate = new Date(currentDate);
+            yesterdayDate.setDate(currentDate.getDate() - 1);
+            year = yesterdayDate.getFullYear();
+            month = (yesterdayDate.getMonth() + 1).toString().padStart(2, '0');
+            day = yesterdayDate.getDate().toString().padStart(2, '0');
+            this.dateStart = `${year}-${month}-${day}`
         }
     },
 }
